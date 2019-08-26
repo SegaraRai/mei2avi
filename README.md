@@ -16,7 +16,7 @@ MeiToAvi.exe video.mei video.avi
 
 ### [FFmpeg](https://ffmpeg.org/)を用いて変換する
 
-MeiToAviで出力ファイルに`-`を指定することで変換したデータを標準出力に出力できます。  
+MeiToAviでは出力ファイルに`-`を指定することで変換したデータを標準出力に出力できます。  
 これを[FFmpeg](https://ffmpeg.org/)とパイプで繋げることで、ファイルを経由せずにMEIファイルを他の形式に変換できます。  
 
 以下にはよく使うと思われる例を示しますが、ここに挙げた以外の変換も可能です。  
@@ -39,7 +39,7 @@ MeiToAvi.exe video.mei - | ffmpeg -i pipe:0.avi -vn -c:a copy video.wav
 
 ### [FFplay](https://ffmpeg.org/ffplay.html)で再生する
 
-video.meiを[FFplay](https://ffmpeg.org/ffplay.html)で再生します。  
+以下の様に実行するとvideo.meiを[FFplay](https://ffmpeg.org/ffplay.html)で再生できます。  
 
 ```bat
 MeiToAvi.exe video.mei - | ffplay pipe:0.avi
