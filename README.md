@@ -80,5 +80,5 @@ MeiToAviはMIT Licenseのもと配布されます。
 
 MeiToAviは[EntisGLS](https://www.entis.jp/gls/)を使用しています。  
 
-> EntisGLS version 4s.05
-> Copyright (C) 1998-2014 理影, Entis soft.
+> EntisGLS version 4s.05  
+> Copyright (C) 1998-2014 理影, Entis soft.  
