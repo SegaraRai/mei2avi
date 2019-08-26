@@ -556,7 +556,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
           indexEntries[i] = AVI::AVIINDEXENTRY{
             chunks[i].video ? GetFourCC("00dc") : GetFourCC("01wb"),
             AVI::AVIIF_KEYFRAME,                                                      // both video frames and audio blocks are keyframes
-            static_cast<std::uint32_t>(chunks[i].chunk->GetOffset() - baseOffset),    // relative to movi; (absolute position is permitted also)
+            static_cast<std::uint32_t>(chunks[i].chunk->GetOffset() - baseOffset),    // relative to movi (absolute position is permitted also)
             static_cast<std::uint32_t>(chunks[i].chunk->GetSize() - 8),               // I don't know why -8, but FFmpeg does
           };
         }
