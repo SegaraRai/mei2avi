@@ -1,6 +1,7 @@
 #ifndef ML_APPROX_FRACTION_HPP
 #define ML_APPROX_FRACTION_HPP
 
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <cstdint>
