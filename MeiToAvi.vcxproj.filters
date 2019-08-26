@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\RIFF">
+      <UniqueIdentifier>{55b55245-1676-4a95-8a6b-7480b31faefd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\RIFF">
+      <UniqueIdentifier>{4421eb5e-d6a9-4a96-8a01-a92cd7182a2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Source">
+      <UniqueIdentifier>{503dba2c-c4bc-4feb-9ed0-627a8df96e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Source">
+      <UniqueIdentifier>{b0bdc9b8-6fbe-4fc0-b88b-6657458263ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RIFF\RIFFBase.cpp">
+      <Filter>ソース ファイル\RIFF</Filter>
+    </ClCompile>
+    <ClCompile Include="RIFF\RIFFRoot.cpp">
+      <Filter>ソース ファイル\RIFF</Filter>
+    </ClCompile>
+    <ClCompile Include="RIFF\RIFFList.cpp">
+      <Filter>ソース ファイル\RIFF</Filter>
+    </ClCompile>
+    <ClCompile Include="RIFF\RIFFChunk.cpp">
+      <Filter>ソース ファイル\RIFF</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MemorySource.cpp">
+      <Filter>ソース ファイル\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MEIToAVI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CacheStorage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CachedSource.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Startup.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="_MultiMon.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ConcatenatedSource.cpp">
+      <Filter>ソース ファイル\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ApproxFraction.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fraction.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CacheStorage.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RIFF\RIFFBase.hpp">
+      <Filter>ヘッダー ファイル\RIFF</Filter>
+    </ClInclude>
+    <ClInclude Include="RIFF\RIFFChunk.hpp">
+      <Filter>ヘッダー ファイル\RIFF</Filter>
+    </ClInclude>
+    <ClInclude Include="RIFF\RIFFList.hpp">
+      <Filter>ヘッダー ファイル\RIFF</Filter>
+    </ClInclude>
+    <ClInclude Include="RIFF\RIFFRoot.hpp">
+      <Filter>ヘッダー ファイル\RIFF</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ConcatenatedSource.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemorySource.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SourceBase.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CachedSource.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="MEIToAVI.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AVI.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
