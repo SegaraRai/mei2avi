@@ -21,7 +21,7 @@ class RIFFChunk : public RIFFBase {
   std::shared_ptr<SourceBase> mContentSource;
   std::shared_ptr<ConcatenatedSource> mSource;
 
-  void CreateSource();
+  void ChunkCreateSource();
 
 protected:
   std::streamsize GetOffsetOf(const RIFFBase* child) const override;

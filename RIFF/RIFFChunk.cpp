@@ -13,7 +13,7 @@
 #include "../Source/SourceBase.hpp"
 
 
-void RIFFChunk::CreateSource() {
+void RIFFChunk::ChunkCreateSource() {
   static auto paddingSource = std::make_shared<NullSource>(1);
 
   const auto contentSize = mContentSource->GetSize();
@@ -51,7 +51,7 @@ RIFFChunk::RIFFChunk(std::uint32_t chunkId, std::shared_ptr<SourceBase> contentS
   mContentSource(contentSource),
   mSource()
 {
-  CreateSource();
+  ChunkCreateSource();
 }
 
 
@@ -77,5 +77,5 @@ std::shared_ptr<SourceBase> RIFFChunk::GetSourceSp() {
 
 void RIFFChunk::SetContentSource(std::shared_ptr<SourceBase> contentSource) {
   mContentSource = contentSource;
-  CreateSource();
+  ChunkCreateSource();
 }
