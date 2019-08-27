@@ -42,6 +42,7 @@
     <ClInclude Include="CacheStorage.hpp" />
     <ClInclude Include="Fraction.hpp" />
     <ClInclude Include="MEIToAVI.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RIFF\RIFFBase.hpp" />
     <ClInclude Include="RIFF\RIFFChunk.hpp" />
     <ClInclude Include="RIFF\RIFFDirBase.hpp" />
@@ -53,6 +54,9 @@
     <ClInclude Include="Source\NullSource.hpp" />
     <ClInclude Include="Source\SourceBase.hpp" />
     <ClInclude Include="Source\Util.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

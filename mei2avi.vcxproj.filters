@@ -125,5 +125,13 @@
     <ClInclude Include="RIFF\RIFFDirBase.hpp">
       <Filter>ヘッダー ファイル\RIFF</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
