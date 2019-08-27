@@ -31,8 +31,7 @@ public:
   RIFFChunk(std::uint32_t chunkId);
 
   std::streamsize GetSize() const override;
-  SourceBase& GetSource() override;
-  std::shared_ptr<SourceBase> GetSourceSp() override;
+  std::shared_ptr<SourceBase> GetSource() override;
 
   void SetContentSource(std::shared_ptr<SourceBase> contentSource);
 };

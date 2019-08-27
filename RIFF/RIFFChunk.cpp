@@ -65,12 +65,7 @@ std::streamsize RIFFChunk::GetSize() const {
 }
 
 
-SourceBase& RIFFChunk::GetSource() {
-  return *mSource;
-}
-
-
-std::shared_ptr<SourceBase> RIFFChunk::GetSourceSp() {
+std::shared_ptr<SourceBase> RIFFChunk::GetSource() {
   return mSource;
 }
 

@@ -45,17 +45,9 @@ std::streamsize RIFFList::GetSize() const {
 }
 
 
-SourceBase& RIFFList::GetSource() {
+std::shared_ptr<SourceBase> RIFFList::GetSource() {
   if (!mSource) {
     throw std::runtime_error("LIST: call CreateSource before GetSource");
-  }
-  return *mSource;
-}
-
-
-std::shared_ptr<SourceBase> RIFFList::GetSourceSp() {
-  if (!mSource) {
-    throw std::runtime_error("LIST: call CreateSource before GetSourceSp");
   }
   return mSource;
 }
@@ -76,7 +68,7 @@ void RIFFList::CreateSource() {
   sources.reserve(mChildren.size() + 1);
   sources.emplace_back(std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&mHeader), sizeof(mHeader)));
   for (const auto& child : mChildren) {
-    sources.emplace_back(child->GetSourceSp());
+    sources.emplace_back(child->GetSource());
   }
   mSource = std::make_shared<ConcatenatedSource>(sources);
 }

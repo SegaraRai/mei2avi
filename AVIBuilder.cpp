@@ -673,5 +673,5 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   riffRoot.CreateSource();
 
-  return riffRoot.GetSourceSp();
+  return riffRoot.GetSource();
 }

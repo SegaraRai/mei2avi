@@ -42,17 +42,9 @@ std::streamsize RIFFRoot::GetSize() const {
 }
 
 
-SourceBase& RIFFRoot::GetSource() {
+std::shared_ptr<SourceBase> RIFFRoot::GetSource() {
   if (!mSource) {
     throw std::runtime_error("ROOT: call CreateSource before GetSource");
-  }
-  return *mSource;
-}
-
-
-std::shared_ptr<SourceBase> RIFFRoot::GetSourceSp() {
-  if (!mSource) {
-    throw std::runtime_error("ROOT: call CreateSource before GetSourceSp");
   }
   return mSource;
 }
@@ -68,7 +60,7 @@ void RIFFRoot::CreateSource() {
   sources.reserve(mChildren.size());
   for (const auto& child : mChildren) {
     child->CreateSource();
-    sources.emplace_back(child->GetSourceSp());
+    sources.emplace_back(child->GetSource());
   }
   mSource = std::make_shared<ConcatenatedSource>(sources);
 }

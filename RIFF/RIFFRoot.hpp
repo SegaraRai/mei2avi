@@ -24,8 +24,7 @@ public:
 
   std::streamsize GetOffset() const override;
   std::streamsize GetSize() const override;
-  SourceBase& GetSource() override;
-  std::shared_ptr<SourceBase> GetSourceSp() override;
+  std::shared_ptr<SourceBase> GetSource() override;
   void SetParent(RIFFBase* parent) override;
   void CreateSource() override;
 

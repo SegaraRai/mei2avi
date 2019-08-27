@@ -32,8 +32,7 @@ public:
   RIFFList(std::uint32_t listId, std::uint32_t chunkId);
 
   std::streamsize GetSize() const override;
-  SourceBase& GetSource() override;
-  std::shared_ptr<SourceBase> GetSourceSp() override;
+  std::shared_ptr<SourceBase> GetSource() override;
   void CreateSource() override;
 
   std::size_t CountChildren() const;
