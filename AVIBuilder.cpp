@@ -611,7 +611,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       4u,
       0u,
       AVI_INDEX_OF_INDEXES,
-      streamInfo.riffs.size(),
+      static_cast<std::uint32_t>(streamInfo.riffs.size()),
       streamInfo.fourCC,
       {},
     };
