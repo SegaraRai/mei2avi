@@ -13,6 +13,7 @@
 #include "RIFF/RIFFList.hpp"
 #include "RIFF/RIFFRoot.hpp"
 #include "Source/MemorySource.hpp"
+#include "Source/NullSource.hpp"
 
 
 // TODO:
@@ -377,7 +378,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   // ### JUNK
   if (mJunkSize) {
-    auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<MemorySource>(mJunkSize));
+    auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<NullSource>(mJunkSize));
     riffAvi->AddChild(junk);
   }
 
