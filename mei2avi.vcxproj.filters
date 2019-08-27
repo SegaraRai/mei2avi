@@ -57,11 +57,11 @@
     <ClCompile Include="Startup.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="_MultiMon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ConcatenatedSource.cpp">
       <Filter>ソース ファイル\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiMon.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -30,7 +30,7 @@
     <ClCompile Include="Source\ConcatenatedSource.cpp" />
     <ClCompile Include="Source\MemorySource.cpp" />
     <ClCompile Include="Startup.cpp" />
-    <ClCompile Include="_MultiMon.cpp" />
+    <ClCompile Include="MultiMon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp" />
