@@ -64,6 +64,9 @@ namespace {
   constexpr std::uint_fast32_t MaxBlocksAVI  = 0xFFFFFFFF;
   constexpr std::uint_fast32_t MaxBlocksAVIX = 0xFFFFFFFF;
 
+  constexpr std::uint8_t AVI_INDEX_OF_INDEXES = 0x00;
+  constexpr std::uint8_t AVI_INDEX_OF_CHUNKS  = 0x01;
+
 
   // 1 -> FourCC("01\0\0")
   std::uint32_t IndexToFourCC(unsigned int index) {
@@ -293,7 +296,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
   // #### avih
   AVI::MainAVIHeader avihData{
     GetAvihMicroSecPerFrame(),
-    0u,   // TODO
+    0u,   // filled later
     0u,
     mAvihFlags,
     0u,   // filled later
@@ -457,7 +460,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
         *reinterpret_cast<AVI::AVISTDINDEX*>(ixxxData.get()) = AVI::AVISTDINDEX{
           2u,
           0u,
-          1u,   // AVI_INDEX_OF_CHUNKS
+          AVI_INDEX_OF_CHUNKS,
           static_cast<std::uint32_t>(perRIFFInfoArray[i]->blocks.size()),
           streamInfoArray[i].fourCC,
           0u,   // filled later
@@ -605,7 +608,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     *reinterpret_cast<AVI::AVISUPERINDEX*>(indxData.get()) = AVI::AVISUPERINDEX{
       4u,
       0u,
-      0u,   // AVI_INDEX_OF_CHUNKS
+      AVI_INDEX_OF_INDEXES,
       streamInfo.riffs.size(),
       streamInfo.fourCC,
       {},
