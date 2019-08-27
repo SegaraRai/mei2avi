@@ -12,7 +12,6 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <numeric>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -77,16 +76,6 @@ namespace {
     if (error != SSystem::SError::errSuccess) {
       throw std::runtime_error(message);
     }
-  }
-
-
-  template<typename T>
-  Fraction<T> ReduceFraction(const Fraction<T>& fraction) {
-    const T gcd = std::gcd<T>(fraction.numerator, fraction.denominator);
-    return Fraction<T>{
-      fraction.numerator / gcd,
-      fraction.denominator / gcd,
-    };
   }
 
 
@@ -384,7 +373,6 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
                  << orgFPS.numerator << L"/"sv << orgFPS.denominator << L" ("sv << (static_cast<double>(orgFPS.numerator) / orgFPS.denominator) << L")"sv <<std::endl;
     }
   }
-  videoFPS = ReduceFraction(videoFPS);
 
 
   // check frame size
