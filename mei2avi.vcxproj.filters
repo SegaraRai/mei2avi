@@ -66,6 +66,9 @@
     <ClCompile Include="AVIBuilder.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Source\NullSource.cpp">
+      <Filter>ソース ファイル\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="AVIBuilder.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NullSource.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
