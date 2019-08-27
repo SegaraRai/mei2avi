@@ -17,6 +17,8 @@ class RIFFChunk : public RIFFBase {
     std::uint32_t size;
   };
 
+  static_assert(sizeof(Header) == 8);
+
   std::uint32_t mChunkId;
   std::shared_ptr<SourceBase> mContentSource;
   std::shared_ptr<ConcatenatedSource> mSource;

@@ -1,25 +1,25 @@
 #ifndef ML_RIFFLIST_HPP
 #define ML_RIFFLIST_HPP
 
-#include <cstddef>
 #include <cstdint>
 #include <ios>
 #include <memory>
-#include <vector>
 
 #include "RIFFBase.hpp"
+#include "RIFFDirBase.hpp"
 #include "../Source/ConcatenatedSource.hpp"
 #include "../Source/SourceBase.hpp"
 
 
-class RIFFList : public RIFFBase {
+class RIFFList : public RIFFDirBase {
   struct Header {
     std::uint32_t listId;
     std::uint32_t size;
     std::uint32_t chunkId;
   };
 
-  std::vector<std::shared_ptr<RIFFBase>> mChildren;
+  static_assert(sizeof(Header) == 12);
+
   std::uint32_t mListId;
   std::uint32_t mChunkId;
   Header mHeader;
@@ -34,11 +34,6 @@ public:
   std::streamsize GetSize() const override;
   std::shared_ptr<SourceBase> GetSource() override;
   void CreateSource() override;
-
-  std::size_t CountChildren() const;
-  RIFFBase* GetChild(std::size_t index);
-  const RIFFBase* GetChild(std::size_t index) const;
-  void AddChild(std::shared_ptr<RIFFBase> child);
 };
 
 #endif

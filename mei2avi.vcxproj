@@ -25,6 +25,7 @@
     <ClCompile Include="MEIToAVI.cpp" />
     <ClCompile Include="RIFF\RIFFBase.cpp" />
     <ClCompile Include="RIFF\RIFFChunk.cpp" />
+    <ClCompile Include="RIFF\RIFFDirBase.cpp" />
     <ClCompile Include="RIFF\RIFFList.cpp" />
     <ClCompile Include="RIFF\RIFFRoot.cpp" />
     <ClCompile Include="Source\CachedSource.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="MEIToAVI.hpp" />
     <ClInclude Include="RIFF\RIFFBase.hpp" />
     <ClInclude Include="RIFF\RIFFChunk.hpp" />
+    <ClInclude Include="RIFF\RIFFDirBase.hpp" />
     <ClInclude Include="RIFF\RIFFList.hpp" />
     <ClInclude Include="RIFF\RIFFRoot.hpp" />
     <ClInclude Include="Source\CachedSource.hpp" />

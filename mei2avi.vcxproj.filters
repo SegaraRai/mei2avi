@@ -69,6 +69,9 @@
     <ClCompile Include="Source\NullSource.cpp">
       <Filter>ソース ファイル\Source</Filter>
     </ClCompile>
+    <ClCompile Include="RIFF\RIFFDirBase.cpp">
+      <Filter>ソース ファイル\RIFF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Source\NullSource.hpp">
       <Filter>ヘッダー ファイル\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="RIFF\RIFFDirBase.hpp">
+      <Filter>ヘッダー ファイル\RIFF</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
