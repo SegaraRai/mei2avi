@@ -282,11 +282,11 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
   }
 
   // ## RIFF-AVI
-  auto riffAvi = std::make_shared<RIFFList>(&riffRoot, AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVI "));
+  auto riffAvi = std::make_shared<RIFFList>(AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVI "));
   riffRoot.AddChild(riffAvi);
 
   // ### LIST-hdrl
-  auto listHdrl = std::make_shared<RIFFList>(riffAvi.get(), AVI::GetFourCC("LIST"), AVI::GetFourCC("hdrl"));
+  auto listHdrl = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("hdrl"));
   riffAvi->AddChild(listHdrl);
 
   // #### avih
@@ -303,7 +303,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     GetAvihHeight(),
   };
   auto avihMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&avihData), sizeof(avihData));
-  auto avih = std::make_shared<RIFFChunk>(listHdrl.get(), AVI::GetFourCC("avih"), avihMemorySource);
+  auto avih = std::make_shared<RIFFChunk>(AVI::GetFourCC("avih"), avihMemorySource);
   listHdrl->AddChild(avih);
 
   // #### LIST-strl
@@ -311,7 +311,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     auto& stream = *mStreams[i];
 
     // #### LIST-strl
-    auto listStrl = std::make_shared<RIFFList>(listHdrl.get(), AVI::GetFourCC("LIST"), AVI::GetFourCC("strl"));
+    auto listStrl = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("strl"));
     listHdrl->AddChild(listStrl);
 
     streamInfoArray[i].listStrl = listStrl;
@@ -319,7 +319,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     // ##### strh
     auto strhData = stream.GetStrh();
     auto strhMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&strhData), sizeof(strhData));
-    auto strh = std::make_shared<RIFFChunk>(listStrl.get(), AVI::GetFourCC("strh"), strhMemorySource);
+    auto strh = std::make_shared<RIFFChunk>(AVI::GetFourCC("strh"), strhMemorySource);
     listStrl->AddChild(strh);
 
     streamInfoArray[i].strhMemorySource = strhMemorySource;
@@ -327,7 +327,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     // ##### strf
     auto strfSource = stream.GetStrf();
-    auto strf = std::make_shared<RIFFChunk>(listStrl.get(), AVI::GetFourCC("strf"), strfSource);
+    auto strf = std::make_shared<RIFFChunk>(AVI::GetFourCC("strf"), strfSource);
     listStrl->AddChild(strf);
 
     streamInfoArray[i].strf = strf;
@@ -335,14 +335,14 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     // ##### strn
     auto strnSource = stream.GetStrn();
     if (strnSource) {
-      auto strn = std::make_shared<RIFFChunk>(listStrl.get(), AVI::GetFourCC("strn"), strnSource);
+      auto strn = std::make_shared<RIFFChunk>(AVI::GetFourCC("strn"), strnSource);
       listStrl->AddChild(strn);
 
       streamInfoArray[i].strn = strn;
     }
 
     // ##### indx (set later)
-    auto indx = std::make_shared<RIFFChunk>(listStrl.get(), AVI::GetFourCC("indx"));
+    auto indx = std::make_shared<RIFFChunk>(AVI::GetFourCC("indx"));
     listStrl->AddChild(indx);
 
     streamInfoArray[i].indx = indx;
@@ -353,7 +353,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
   // Open-DML
   if (!(mBuilderFlags & NoOdml)) {
     // #### LIST-odml
-    auto listOdml = std::make_shared<RIFFList>(listHdrl.get(), AVI::GetFourCC("LIST"), AVI::GetFourCC("odml"));
+    auto listOdml = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("odml"));
     listHdrl->AddChild(listOdml);
 
     // ##### dmlh
@@ -362,7 +362,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       {},
     };
     auto dmlhMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&dmlhData), sizeof(dmlhData));
-    auto dmlh = std::make_shared<RIFFChunk>(listOdml.get(), AVI::GetFourCC("dmlh"), dmlhMemorySource);
+    auto dmlh = std::make_shared<RIFFChunk>(AVI::GetFourCC("dmlh"), dmlhMemorySource);
     listOdml->AddChild(dmlh);
   }
 
@@ -377,16 +377,16 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   // ### JUNK
   if (mJunkSize) {
-    auto junk = std::make_shared<RIFFChunk>(riffAvi.get(), AVI::GetFourCC("JUNK"), std::make_shared<MemorySource>(mJunkSize));
+    auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<MemorySource>(mJunkSize));
     riffAvi->AddChild(junk);
   }
 
   // ### LIST-movi
-  auto listMovi = std::make_shared<RIFFList>(riffAvi.get(), AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
+  auto listMovi = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
   riffAvi->AddChild(listMovi);
 
   // #### idx1
-  auto idx1 = std::make_shared<RIFFChunk>(riffAvi.get(), AVI::GetFourCC("idx1"));
+  auto idx1 = std::make_shared<RIFFChunk>(AVI::GetFourCC("idx1"));
   if (!(mBuilderFlags & NoIdx1)) {
     riffAvi->AddChild(idx1);
   }
@@ -472,7 +472,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
           };
         }
         auto ixxxMemorySource = std::make_shared<MemorySource>(std::move(ixxxData), ixxxSize);
-        auto ixxx = std::make_shared<RIFFChunk>(avixListMovi.get(), AVI::GetFourCC("ix\0\0") | ((streamInfoArray[i].fourCC & 0x0000FFFF) << 16), ixxxMemorySource);
+        auto ixxx = std::make_shared<RIFFChunk>(AVI::GetFourCC("ix\0\0") | ((streamInfoArray[i].fourCC & 0x0000FFFF) << 16), ixxxMemorySource);
         avixListMovi->AddChild(ixxx);
         perRIFFInfoArray[i]->ixxx = ixxx;
         perRIFFInfoArray[i]->ixxxMemorySource = ixxxMemorySource;
@@ -512,10 +512,10 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     // start new RIFF-AVIX list
     if (startNextAvix) {
-      riffAvix = std::make_shared<RIFFList>(&riffRoot, AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVIX"));
+      riffAvix = std::make_shared<RIFFList>(AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVIX"));
       riffRoot.AddChild(riffAvix);
 
-      avixListMovi = std::make_shared<RIFFList>(riffAvix.get(), AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
+      avixListMovi = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
       riffAvix->AddChild(avixListMovi);
 
       initializeRiff = true;
@@ -550,7 +550,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     auto& perRIFFInfo = *perRIFFInfoArray[nextStreamIndex];
 
     auto chunkSource = stream->GetBlockData(streamInfo.currentBlockIndex);
-    auto chunk = std::make_shared<RIFFChunk>(avixListMovi.get(), streamInfo.fourCC, chunkSource);
+    auto chunk = std::make_shared<RIFFChunk>(streamInfo.fourCC, chunkSource);
     avixListMovi->AddChild(chunk);
 
     blocks.push_back(BlockInfo{

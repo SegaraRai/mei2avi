@@ -34,8 +34,8 @@ std::streamsize RIFFChunk::GetOffsetOf(const RIFFBase* child) const {
 }
 
 
-RIFFChunk::RIFFChunk(RIFFBase* parent, std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource) :
-  RIFFBase(parent),
+RIFFChunk::RIFFChunk(std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource) :
+  RIFFBase(),
   mChunkId(chunkId),
   mContentSource(contentSource),
   mSource()
@@ -44,8 +44,8 @@ RIFFChunk::RIFFChunk(RIFFBase* parent, std::uint32_t chunkId, std::shared_ptr<So
 }
 
 
-RIFFChunk::RIFFChunk(RIFFBase* parent, std::uint32_t chunkId) :
-  RIFFChunk(parent, chunkId, std::make_shared<MemorySource>(0))
+RIFFChunk::RIFFChunk(std::uint32_t chunkId) :
+  RIFFChunk(chunkId, std::make_shared<MemorySource>(0))
 {}
 
 

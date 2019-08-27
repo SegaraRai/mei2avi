@@ -385,12 +385,12 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
 
   aviBuilder.SetJunkSize(options.junkChunkSize);
 
-  auto listInfo = std::make_shared<RIFFList>(nullptr, AVI::GetFourCC("LIST"), AVI::GetFourCC("INFO"));
+  auto listInfo = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("INFO"));
 
   const char isftStr[] = "mei2avi v0.1.0\0";
   static_assert(sizeof(isftStr) == 16);
   auto isftMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(isftStr), sizeof(isftStr));
-  auto isft = std::make_shared<RIFFChunk>(listInfo.get(), AVI::GetFourCC("ISFT"), isftMemorySource);
+  auto isft = std::make_shared<RIFFChunk>(AVI::GetFourCC("ISFT"), isftMemorySource);
   listInfo->AddChild(isft);
 
   aviBuilder.SetListInfo(listInfo);

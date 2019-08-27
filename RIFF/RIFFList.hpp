@@ -29,7 +29,7 @@ protected:
   std::streamsize GetOffsetOf(const RIFFBase* child) const override;
 
 public:
-  RIFFList(RIFFBase* parent, std::uint32_t listId, std::uint32_t chunkId);
+  RIFFList(std::uint32_t listId, std::uint32_t chunkId);
 
   std::streamsize GetSize() const override;
   SourceBase& GetSource() override;

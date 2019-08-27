@@ -3,8 +3,8 @@
 #include "RIFFBase.hpp" 
 
 
-RIFFBase::RIFFBase(RIFFBase* parent) :
-  parent(parent)
+RIFFBase::RIFFBase() :
+  parent(nullptr)
 {}
 
 

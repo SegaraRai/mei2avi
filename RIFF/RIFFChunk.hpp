@@ -27,8 +27,8 @@ protected:
   std::streamsize GetOffsetOf(const RIFFBase* child) const override;
 
 public:
-  RIFFChunk(RIFFBase* parent, std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource);
-  RIFFChunk(RIFFBase* parent, std::uint32_t chunkId);
+  RIFFChunk(std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource);
+  RIFFChunk(std::uint32_t chunkId);
 
   std::streamsize GetSize() const override;
   SourceBase& GetSource() override;

@@ -26,6 +26,7 @@ public:
   std::streamsize GetSize() const override;
   SourceBase& GetSource() override;
   std::shared_ptr<SourceBase> GetSourceSp() override;
+  void SetParent(RIFFBase* parent) override;
   void CreateSource() override;
 
   std::size_t CountChildren() const;

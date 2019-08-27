@@ -23,8 +23,8 @@ std::streamsize RIFFList::GetOffsetOf(const RIFFBase* child) const {
 }
 
 
-RIFFList::RIFFList(RIFFBase* parent, std::uint32_t listId, std::uint32_t chunkId) :
-  RIFFBase(parent),
+RIFFList::RIFFList(std::uint32_t listId, std::uint32_t chunkId) :
+  RIFFBase(),
   mListId(listId),
   mChunkId(chunkId),
   mHeader{

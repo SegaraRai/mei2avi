@@ -16,7 +16,7 @@ protected:
   virtual std::streamsize GetOffsetOf(const RIFFBase* child) const = 0;
 
 public:
-  RIFFBase(RIFFBase* parent);
+  RIFFBase();
   virtual ~RIFFBase() = default;
 
   virtual std::streamsize GetOffset() const;
@@ -24,7 +24,7 @@ public:
   virtual SourceBase& GetSource() = 0;
   virtual std::shared_ptr<SourceBase> GetSourceSp() = 0;
 
-  void SetParent(RIFFBase* parent);
+  virtual void SetParent(RIFFBase* parent);
 
   virtual void CreateSource();
 };
