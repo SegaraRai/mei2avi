@@ -10,46 +10,31 @@
 #include "Util.hpp"
 
 
-void ConcatenatedSource::ConstructBinarySearchTree(std::size_t treeIndex, const PartialSource* sources, std::size_t sourceOffset, std::size_t numSources) {
-  // treeIndex starts at 1
-
-  if (numSources == 0) {
-    return;
-  }
-
-  // the middle element (use the right one if the size is even)
-  const auto middleIndex = numSources / 2;
-
-  const auto absoluteMiddleIndex = sourceOffset + middleIndex;
-  mOffsetBinarySearchTree[treeIndex] = OffsetInfo{
-    sources[absoluteMiddleIndex].offset,
-    sources[absoluteMiddleIndex].size,
-    absoluteMiddleIndex,
-  };
-
-  // left subtree
-  ConstructBinarySearchTree(treeIndex * 2, sources, sourceOffset, middleIndex);
-  // right subtree
-  ConstructBinarySearchTree(treeIndex * 2 + 1, sources, sourceOffset + middleIndex + 1, numSources - middleIndex - 1);
-}
-
-
 std::size_t ConcatenatedSource::GetIndexFromOffset(std::streamsize offset) const {
   assert(0 <= offset && offset < mTotalSize);
+  assert(!mPartialSources.empty());
 
-  std::size_t treeIndex = 1;
-  while (true) {
-    assert(treeIndex < mOffsetBinarySearchTree.size());
+  // binary search
 
-    const auto& node = mOffsetBinarySearchTree[treeIndex];
-    assert(node.offset != UnusedOffset);
+  std::size_t leftIndex = 0;
+  std::size_t rightIndex = mPartialSources.size() - 1;
 
-    if (node.offset <= offset && offset < node.offset + node.size) {
+  while (leftIndex <= rightIndex) {
+    const std::size_t middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
+    const auto& partialSource = mPartialSources[middleIndex];
+    if (partialSource.offset > offset) {
+      // search for left
+      rightIndex = middleIndex - 1;
+    } else if (partialSource.offset + partialSource.size <= offset) {
+      // search for right
+      leftIndex = middleIndex + 1;
+    } else {
       // found
-      return node.index;
+      return middleIndex;
     }
-    treeIndex = node.offset > offset ? treeIndex * 2 : treeIndex * 2 + 1;
   }
+
+  throw std::runtime_error("GetIndexFromOffset: index not found");
 }
 
 
