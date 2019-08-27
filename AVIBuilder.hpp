@@ -33,14 +33,14 @@ public:
       std::uint32_t indexFlags;
     };
 
-    static constexpr std::uint32_t FourCCvids = AVI::GetFourCC("vids");
     static constexpr std::uint32_t FourCCauds = AVI::GetFourCC("auds");
     static constexpr std::uint32_t FourCCtxts = AVI::GetFourCC("txts");
+    static constexpr std::uint32_t FourCCvids = AVI::GetFourCC("vids");
 
-    static constexpr std::uint32_t FourCCwb = AVI::GetFourCC("\0\0wb");
     static constexpr std::uint32_t FourCCdb = AVI::GetFourCC("\0\0db");
     static constexpr std::uint32_t FourCCdc = AVI::GetFourCC("\0\0dc");
     static constexpr std::uint32_t FourCCtx = AVI::GetFourCC("\0\0tx");
+    static constexpr std::uint32_t FourCCwb = AVI::GetFourCC("\0\0wb");
 
     virtual ~AVIStream() = default;
 
