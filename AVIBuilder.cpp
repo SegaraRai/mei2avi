@@ -16,29 +16,25 @@
 #include "Source/NullSource.hpp"
 
 
-// TODO:
-// - RIFFList, RIFFRootをもっと高機能に
-// - RIFFRootをRIFFListから派生させる
-// - RIFFChunkに2の倍数パディングを実装
-
 /*
 RIFF-AVI
   LIST-hdrl
     avih
     LIST-strl
       strh
-      strf : provide
-        indx
-      strn : provide
+      strf
+      strn
+      indx
     LIST-strl
       strh
-      strf : provide
+      strf
+      strn
       indx
-      strn : provide
     LIST-odml
       dmlh
-  JUNK
+  (JUNK)
   LIST-INFO
+  JUNK
   LIST-movi
     ****
     ****
@@ -287,11 +283,11 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   // ## RIFF-AVI
   auto riffAvi = std::make_shared<RIFFList>(AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVI "));
-  riffRoot.AddChild(riffAvi);
+  riffRoot.AppendChild(riffAvi);
 
   // ### LIST-hdrl
   auto listHdrl = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("hdrl"));
-  riffAvi->AddChild(listHdrl);
+  riffAvi->AppendChild(listHdrl);
 
   // #### avih
   AVI::MainAVIHeader avihData{
@@ -308,7 +304,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
   };
   auto avihMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&avihData), sizeof(avihData));
   auto avih = std::make_shared<RIFFChunk>(AVI::GetFourCC("avih"), avihMemorySource);
-  listHdrl->AddChild(avih);
+  listHdrl->AppendChild(avih);
 
   // #### LIST-strl
   for (std::size_t i = 0; i < mStreams.size(); i++) {
@@ -316,7 +312,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     // #### LIST-strl
     auto listStrl = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("strl"));
-    listHdrl->AddChild(listStrl);
+    listHdrl->AppendChild(listStrl);
 
     streamInfoArray[i].listStrl = listStrl;
 
@@ -324,7 +320,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     auto strhData = stream.GetStrh();
     auto strhMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&strhData), sizeof(strhData));
     auto strh = std::make_shared<RIFFChunk>(AVI::GetFourCC("strh"), strhMemorySource);
-    listStrl->AddChild(strh);
+    listStrl->AppendChild(strh);
 
     streamInfoArray[i].strhMemorySource = strhMemorySource;
     streamInfoArray[i].strh = strh;
@@ -332,7 +328,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     // ##### strf
     auto strfSource = stream.GetStrf();
     auto strf = std::make_shared<RIFFChunk>(AVI::GetFourCC("strf"), strfSource);
-    listStrl->AddChild(strf);
+    listStrl->AppendChild(strf);
 
     streamInfoArray[i].strf = strf;
 
@@ -340,14 +336,14 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     auto strnSource = stream.GetStrn();
     if (strnSource) {
       auto strn = std::make_shared<RIFFChunk>(AVI::GetFourCC("strn"), strnSource);
-      listStrl->AddChild(strn);
+      listStrl->AppendChild(strn);
 
       streamInfoArray[i].strn = strn;
     }
 
     // ##### indx (set later)
     auto indx = std::make_shared<RIFFChunk>(AVI::GetFourCC("indx"));
-    listStrl->AddChild(indx);
+    listStrl->AppendChild(indx);
 
     streamInfoArray[i].indx = indx;
 
@@ -358,7 +354,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
   if (!(mBuilderFlags & NoOdml)) {
     // #### LIST-odml
     auto listOdml = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("odml"));
-    listHdrl->AddChild(listOdml);
+    listHdrl->AppendChild(listOdml);
 
     // ##### dmlh
     AVI::AVIEXTHEADER dmlhData{
@@ -367,7 +363,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     };
     auto dmlhMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&dmlhData), sizeof(dmlhData));
     auto dmlh = std::make_shared<RIFFChunk>(AVI::GetFourCC("dmlh"), dmlhMemorySource);
-    listOdml->AddChild(dmlh);
+    listOdml->AppendChild(dmlh);
   }
 
   OnFinishListHdrl(listHdrl);
@@ -376,23 +372,23 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   // ### LIST-INFO
   if (mListInfo) {
-    riffAvi->AddChild(mListInfo);
+    riffAvi->AppendChild(mListInfo);
   }
 
   // ### JUNK
   if (mJunkSize) {
     auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<NullSource>(mJunkSize));
-    riffAvi->AddChild(junk);
+    riffAvi->AppendChild(junk);
   }
 
   // ### LIST-movi
   auto listMovi = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
-  riffAvi->AddChild(listMovi);
+  riffAvi->AppendChild(listMovi);
 
   // #### idx1
   auto idx1 = std::make_shared<RIFFChunk>(AVI::GetFourCC("idx1"));
   if (!(mBuilderFlags & NoIdx1)) {
-    riffAvi->AddChild(idx1);
+    riffAvi->AppendChild(idx1);
   }
 
   // end of header
@@ -477,7 +473,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
         }
         auto ixxxMemorySource = std::make_shared<MemorySource>(std::move(ixxxData), ixxxSize);
         auto ixxx = std::make_shared<RIFFChunk>(AVI::GetFourCC("ix\0\0") | ((streamInfoArray[i].fourCC & 0x0000FFFF) << 16), ixxxMemorySource);
-        avixListMovi->AddChild(ixxx);
+        avixListMovi->AppendChild(ixxx);
         perRIFFInfoArray[i]->ixxx = ixxx;
         perRIFFInfoArray[i]->ixxxMemorySource = ixxxMemorySource;
         perRIFFInfoArray[i]->ixxxBaseRiff = baseRiff;
@@ -517,10 +513,10 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     // start new RIFF-AVIX list
     if (startNextAvix) {
       riffAvix = std::make_shared<RIFFList>(AVI::GetFourCC("RIFF"), AVI::GetFourCC("AVIX"));
-      riffRoot.AddChild(riffAvix);
+      riffRoot.AppendChild(riffAvix);
 
       avixListMovi = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("movi"));
-      riffAvix->AddChild(avixListMovi);
+      riffAvix->AppendChild(avixListMovi);
 
       initializeRiff = true;
     }
@@ -555,7 +551,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     auto chunkSource = stream->GetBlockData(streamInfo.currentBlockIndex);
     auto chunk = std::make_shared<RIFFChunk>(streamInfo.fourCC, chunkSource);
-    avixListMovi->AddChild(chunk);
+    avixListMovi->AppendChild(chunk);
 
     blocks.push_back(BlockInfo{
       nextStreamIndex,

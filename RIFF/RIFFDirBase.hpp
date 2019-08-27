@@ -3,9 +3,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <deque>
 #include <ios>
 #include <memory>
-#include <vector>
 
 #include "RIFFBase.hpp"
 #include "../Source/ConcatenatedSource.hpp"
@@ -14,7 +14,7 @@
 
 class RIFFDirBase : public RIFFBase {
 protected:
-  std::vector<std::shared_ptr<RIFFBase>> children;
+  std::deque<std::shared_ptr<RIFFBase>> children;
   std::shared_ptr<ConcatenatedSource> contentSource;
 
   std::streamsize GetChildOffsetOf(const RIFFBase* child) const;
@@ -28,7 +28,8 @@ public:
   std::size_t CountChildren() const;
   RIFFBase* GetChild(std::size_t index);
   const RIFFBase* GetChild(std::size_t index) const;
-  void AddChild(std::shared_ptr<RIFFBase> child);
+  void AppendChild(std::shared_ptr<RIFFBase> child);
+  void PrependChild(std::shared_ptr<RIFFBase> child);
 };
 
 #endif

@@ -422,7 +422,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
   static_assert(sizeof(isftStr) == 16);
   auto isftMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(isftStr), sizeof(isftStr));
   auto isft = std::make_shared<RIFFChunk>(AVI::GetFourCC("ISFT"), isftMemorySource);
-  listInfo->AddChild(isft);
+  listInfo->AppendChild(isft);
 
   aviBuilder.SetListInfo(listInfo);
 

@@ -62,7 +62,13 @@ const RIFFBase* RIFFDirBase::GetChild(std::size_t index) const {
 }
 
 
-void RIFFDirBase::AddChild(std::shared_ptr<RIFFBase> child) {
+void RIFFDirBase::AppendChild(std::shared_ptr<RIFFBase> child) {
   child->SetParent(this);
   children.push_back(child);
+}
+
+
+void RIFFDirBase::PrependChild(std::shared_ptr<RIFFBase> child) {
+  child->SetParent(this);
+  children.push_front(child);
 }
