@@ -94,8 +94,7 @@
       <AdditionalIncludeDirectories>EntisGLS4s.05\Include\opengl;EntisGLS4s.05\Include\win32;EntisGLS4s.05\Include\common</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ForcedIncludeFiles>
-      </ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)XEntisGLS4Hack.hpp</ForcedIncludeFiles>
       <PreprocessorDefinitions>DISABLE_ENTIS_GLS4_EXPORTS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -116,8 +115,7 @@
       <AdditionalIncludeDirectories>EntisGLS4s.05\Include\opengl;EntisGLS4s.05\Include\win32;EntisGLS4s.05\Include\common</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ForcedIncludeFiles>
-      </ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)XEntisGLS4Hack.hpp</ForcedIncludeFiles>
       <PreprocessorDefinitions>DISABLE_ENTIS_GLS4_EXPORTS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -145,8 +143,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ForcedIncludeFiles>
-      </ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)XEntisGLS4Hack.hpp</ForcedIncludeFiles>
       <PreprocessorDefinitions>DISABLE_ENTIS_GLS4_EXPORTS;_MBCS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
@@ -175,8 +172,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ForcedIncludeFiles>
-      </ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)XEntisGLS4Hack.hpp</ForcedIncludeFiles>
       <PreprocessorDefinitions>DISABLE_ENTIS_GLS4_EXPORTS;_MBCS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>

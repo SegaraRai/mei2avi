@@ -54,6 +54,7 @@
     <ClInclude Include="Source\NullSource.hpp" />
     <ClInclude Include="Source\SourceBase.hpp" />
     <ClInclude Include="Source\Util.hpp" />
+    <ClInclude Include="XEntisGLS4Hack.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
