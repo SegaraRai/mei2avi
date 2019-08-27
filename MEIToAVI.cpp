@@ -402,13 +402,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
   std::uint_fast32_t audioSamplesPerFrame = 0;
 
   if (hasAudio) {
-    audioSamplesPerFrame = options.audioBlockSamples ? options.audioBlockSamples : audioSamplingRate* videoFPS.denominator / videoFPS.numerator;
-
-    // 2の倍数にする
-    audioSamplesPerFrame = (audioSamplesPerFrame + 1) & ~static_cast<decltype(audioSamplesPerFrame)>(1);
-
-    // RIFFはチャンクを2バイト単位で整列する必要があるのでとりあえず
-    // audioBlockSizeを加味すれば問題ないこともあるが一応
+    audioSamplesPerFrame = options.audioBlockSamples ? options.audioBlockSamples : audioSamplingRate * videoFPS.denominator / videoFPS.numerator;
   }
 
 
