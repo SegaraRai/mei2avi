@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AVIBuilder.cpp" />
     <ClCompile Include="CacheStorage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MEIToAVI.cpp" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp" />
     <ClInclude Include="AVI.hpp" />
+    <ClInclude Include="AVIBuilder.hpp" />
     <ClInclude Include="CacheStorage.hpp" />
     <ClInclude Include="Fraction.hpp" />
     <ClInclude Include="MEIToAVI.hpp" />

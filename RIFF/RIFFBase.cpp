@@ -13,6 +13,11 @@ std::streamsize RIFFBase::GetOffset() const {
 }
 
 
+void RIFFBase::SetParent(RIFFBase* parent) {
+  this->parent = parent;
+}
+
+
 void RIFFBase::CreateSource() {
   // do nothing
 }

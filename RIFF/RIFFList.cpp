@@ -98,5 +98,6 @@ const RIFFBase* RIFFList::GetChild(std::size_t index) const {
 
 
 void RIFFList::AddChild(std::shared_ptr<RIFFBase> child) {
+  child->SetParent(this);
   mChildren.push_back(child);
 }

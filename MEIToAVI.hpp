@@ -28,22 +28,10 @@ public:
   };
 
 private:
-  class FrameImageSource : public SourceBase {
-    ERISA::SGLMovieFilePlayer* mPtrMovieFilePlayer;
-    std::size_t mFrameIndex;
-    std::size_t mSize;
-
-  public:
-    FrameImageSource(ERISA::SGLMovieFilePlayer& movieFilePlayer, std::uint_fast32_t frameIndex);
-
-    std::streamsize GetSize() const override;
-    void Read(std::uint8_t* data, std::size_t size, std::streamsize offset) override;
-  };
-
   CacheStorage mCacheStorage;
   SSystem::SFile mFile;
   ERISA::SGLMovieFilePlayer mMovieFilePlayer;
-  RIFFRoot mRiffRoot;
+  std::shared_ptr<SourceBase> mAvi;
 
 public:
   MEIToAVI(const std::wstring& filePath, const Options& options);

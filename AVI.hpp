@@ -7,6 +7,15 @@
 
 
 namespace AVI {
+  constexpr std::uint32_t GetFourCC(const char fourcc[5]) {
+    return
+      static_cast<std::uint32_t>(fourcc[0]) << 0 |
+      static_cast<std::uint32_t>(fourcc[1]) << 8 |
+      static_cast<std::uint32_t>(fourcc[2]) << 16 |
+      static_cast<std::uint32_t>(fourcc[3]) << 24;
+  }
+
+
 #pragma pack(push, 1)
 
   struct BITMAPINFOHEADER {

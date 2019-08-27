@@ -22,7 +22,7 @@ constexpr Fraction<std::uint_fast32_t> ApproxFraction(Fraction<std::uint_fast32_
   };
 
 
-  auto myAbs = [](double value) constexpr {
+  auto myAbs = [] (double value) constexpr {
     return value >= 0. ? value : -value;
   };
 

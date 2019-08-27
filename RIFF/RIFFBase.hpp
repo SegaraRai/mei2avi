@@ -23,6 +23,9 @@ public:
   virtual std::streamsize GetSize() const = 0;
   virtual SourceBase& GetSource() = 0;
   virtual std::shared_ptr<SourceBase> GetSourceSp() = 0;
+
+  void SetParent(RIFFBase* parent);
+
   virtual void CreateSource();
 };
 

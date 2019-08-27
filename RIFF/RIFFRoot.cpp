@@ -85,5 +85,6 @@ const RIFFBase* RIFFRoot::GetChild(std::size_t index) const {
 
 
 void RIFFRoot::AddChild(std::shared_ptr<RIFFBase> child) {
+  child->SetParent(this);
   mChildren.push_back(child);
 }
