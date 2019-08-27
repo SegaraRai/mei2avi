@@ -1,3 +1,4 @@
+#include <cassert>
 #include <ios>
 
 #include "RIFFBase.hpp" 
@@ -14,6 +15,8 @@ std::streamsize RIFFBase::GetOffset() const {
 
 
 void RIFFBase::SetParent(RIFFBase* parent) {
+  assert(!this->parent);
+  assert(parent);
   this->parent = parent;
 }
 
