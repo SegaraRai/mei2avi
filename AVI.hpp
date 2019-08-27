@@ -18,35 +18,6 @@ namespace AVI {
 
 #pragma pack(push, 1)
 
-  struct BITMAPINFOHEADER {
-    std::uint32_t biSize;
-    std::uint32_t biWidth;
-    std::uint32_t biHeight;
-    std::uint16_t biPlanes;
-    std::uint16_t biBitCount;
-    std::uint32_t biCompression;
-    std::uint32_t biSizeImage;
-    std::uint32_t biXPelsPerMeter;
-    std::uint32_t biYPelsPerMeter;
-    std::uint32_t biClrUsed;
-    std::uint32_t biClrImportant;
-  };
-
-  static_assert(sizeof(BITMAPINFOHEADER) == 4 * 10);
-
-
-  struct WAVEFORMATEX {
-    std::uint16_t wFormatTag;
-    std::uint16_t nChannels;
-    std::uint32_t nSamplesPerSec;
-    std::uint32_t nAvgBytesPerSec;
-    std::uint16_t nBlockAlign;
-    std::uint16_t wBitsPerSample;
-  };
-
-  static_assert(sizeof(WAVEFORMATEX) == 4 * 4);
-
-
   struct MainAVIHeader {
     std::uint32_t dwMicroSecPerFrame;    // frame display rate
     std::uint32_t dwMaxBytesPerSec;      // maximum transfer rate

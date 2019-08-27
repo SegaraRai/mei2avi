@@ -35,6 +35,37 @@ using namespace std::literals;
 
 
 namespace {
+#pragma pack(push, 1)
+  struct BITMAPINFOHEADER {
+    std::uint32_t biSize;
+    std::uint32_t biWidth;
+    std::uint32_t biHeight;
+    std::uint16_t biPlanes;
+    std::uint16_t biBitCount;
+    std::uint32_t biCompression;
+    std::uint32_t biSizeImage;
+    std::uint32_t biXPelsPerMeter;
+    std::uint32_t biYPelsPerMeter;
+    std::uint32_t biClrUsed;
+    std::uint32_t biClrImportant;
+  };
+
+  static_assert(sizeof(BITMAPINFOHEADER) == 4 * 10);
+
+
+  struct WAVEFORMATEX {
+    std::uint16_t wFormatTag;
+    std::uint16_t nChannels;
+    std::uint32_t nSamplesPerSec;
+    std::uint32_t nAvgBytesPerSec;
+    std::uint16_t nBlockAlign;
+    std::uint16_t wBitsPerSample;
+  };
+
+  static_assert(sizeof(WAVEFORMATEX) == 4 * 4);
+#pragma pack(pop)
+
+
   constexpr std::uint_fast32_t MaxRiffSizeAVI  = 0x40000000;    // 1 GiB
   constexpr std::uint_fast32_t MaxRiffSizeAVIX = 0x40000000;    // 1 GiB
 
@@ -94,7 +125,7 @@ namespace {
     std::uint_fast32_t mNumFrames;
     std::uint_fast32_t mFrameDataSize;
     AVI::AVIStreamHeader mStrh;
-    AVI::BITMAPINFOHEADER mStrf;
+    BITMAPINFOHEADER mStrf;
     std::shared_ptr<MemorySource> mStrfMemorySource;
 
   public:
@@ -109,8 +140,8 @@ namespace {
       const auto size = mPtrMovieFilePlayer->CurrentFrame()->GetImageSize();
       mFrameDataSize = size.w * size.h * 4;
 
-      mStrf = AVI::BITMAPINFOHEADER{
-        sizeof(AVI::BITMAPINFOHEADER),
+      mStrf = BITMAPINFOHEADER{
+        sizeof(BITMAPINFOHEADER),
         static_cast<std::uint32_t>(size.w),
         static_cast<std::uint32_t>(-size.h),
         1u,
@@ -167,7 +198,7 @@ namespace {
     std::uint_fast32_t mNumSamples;
     std::uint_fast32_t mNumBlocks;
     AVI::AVIStreamHeader mStrh;
-    AVI::WAVEFORMATEX mStrf;
+    WAVEFORMATEX mStrf;
     std::shared_ptr<MemorySource> mStrfMemorySource;
     std::vector<std::shared_ptr<SourceBase>> mBlockSources;
 
@@ -206,7 +237,7 @@ namespace {
         {},
       };
 
-      mStrf = AVI::WAVEFORMATEX{
+      mStrf = WAVEFORMATEX{
         0x0001u,    // WAVE_FORMAT_PCM
         static_cast<std::uint16_t>(mNumChannels),
         static_cast<std::uint32_t>(mSamplingRate),
