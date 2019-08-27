@@ -22,6 +22,7 @@ class ConcatenatedSource : public SourceBase {
 
   std::vector<PartialSource> mPartialSources;
   std::streamsize mTotalSize;
+  std::size_t mLastIndex;
 
   std::size_t GetIndexFromOffset(std::streamsize offset) const;
 
@@ -29,7 +30,8 @@ public:
   template<typename T>
   ConcatenatedSource(const T& sources) :
     mPartialSources(),
-    mTotalSize(0)
+    mTotalSize(0),
+    mLastIndex(0)
   {
     const auto numSources = std::size(sources);
     mPartialSources.reserve(numSources);
