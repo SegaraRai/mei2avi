@@ -1,8 +1,5 @@
 #define NOMINMAX
 
-// FFmpegっぽい構造で出力するモード（デバッグ用）
-//#define LIKE_FFMPEG 1
-
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
@@ -63,13 +60,6 @@ namespace {
 
   static_assert(sizeof(WAVEFORMATEX) == 4 * 4);
 #pragma pack(pop)
-
-
-  constexpr std::uint_fast32_t MaxRiffSizeAVI  = 0x40000000;    // 1 GiB
-  constexpr std::uint_fast32_t MaxRiffSizeAVIX = 0x40000000;    // 1 GiB
-
-  constexpr std::uint_fast32_t MaxStreamsAVI   = 0xFFFFFFFF;
-  constexpr std::uint_fast32_t MaxStreamsAVIX  = 0xFFFFFFFF;
 
 
   void CheckError(SSystem::SError error, const std::string& message) {
