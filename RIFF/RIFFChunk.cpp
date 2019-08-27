@@ -9,23 +9,34 @@
 #include "RIFFChunk.hpp"
 #include "../Source/ConcatenatedSource.hpp"
 #include "../Source/MemorySource.hpp"
+#include "../Source/NullSource.hpp"
 #include "../Source/SourceBase.hpp"
 
 
 void RIFFChunk::CreateSource() {
-  if (mContentSource->GetSize() > std::numeric_limits<std::uint32_t>::max()) {
+  static auto paddingSource = std::make_shared<NullSource>(1);
+
+  const auto contentSize = mContentSource->GetSize();
+
+  if (contentSize > std::numeric_limits<std::uint32_t>::max()) {
     throw std::runtime_error("CHUNK: content too large");
   }
 
   const Header header{
     mChunkId,
-    static_cast<std::uint32_t>(mContentSource->GetSize()),
+    static_cast<std::uint32_t>(contentSize),
   };
 
-  mSource = std::make_shared<ConcatenatedSource>(std::array<std::shared_ptr<SourceBase>, 2>{
+  std::vector<std::shared_ptr<SourceBase>> sources{
     std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(&header), sizeof(header)),
     mContentSource,
-  });
+  };
+
+  if (contentSize & 1) {
+    sources.push_back(paddingSource);
+  }
+
+  mSource = std::make_shared<ConcatenatedSource>(sources);
 }
 
 
