@@ -412,7 +412,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
 
   auto listInfo = std::make_shared<RIFFList>(AVI::GetFourCC("LIST"), AVI::GetFourCC("INFO"));
 
-  const char isftStr[] = "mei2avi v0.1.0";
+  const char isftStr[] = "mei2avi v0.2.0";
   auto isftMemorySource = std::make_shared<MemorySource>(reinterpret_cast<const std::uint8_t*>(isftStr), sizeof(isftStr));
   auto isft = std::make_shared<RIFFChunk>(AVI::GetFourCC("ISFT"), isftMemorySource);
   listInfo->AppendChild(isft);
