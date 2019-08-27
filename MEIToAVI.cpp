@@ -18,7 +18,7 @@
 #include <string_view>
 #include <vector>
 
-#include "MeiToAVI.hpp"
+#include "MEIToAVI.hpp"
 #include "ApproxFraction.hpp"
 #include "AVI.hpp"
 #include "Fraction.hpp"

@@ -50,7 +50,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{59E42633-DAA2-4DB7-9D26-2CFB45BE8146}</ProjectGuid>
-    <RootNamespace>MeiToAvi</RootNamespace>
+    <RootNamespace>mei2avi</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

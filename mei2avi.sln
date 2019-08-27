@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EntisGLS4", "EntisGLS4.vcxproj", "{03F9F65D-75AB-4EED-B980-1DF35B9146C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeiToAvi", "MeiToAvi.vcxproj", "{59E42633-DAA2-4DB7-9D26-2CFB45BE8146}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mei2avi", "mei2avi.vcxproj", "{59E42633-DAA2-4DB7-9D26-2CFB45BE8146}"
 	ProjectSection(ProjectDependencies) = postProject
 		{03F9F65D-75AB-4EED-B980-1DF35B9146C4} = {03F9F65D-75AB-4EED-B980-1DF35B9146C4}
 	EndProjectSection

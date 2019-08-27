@@ -1,4 +1,4 @@
-# MeiToAvi
+# mei2avi
 
 MEIファイル（[ERIフォーマット](https://www.entis.jp/eridev/)）を無圧縮AVIファイルに変換するプログラムです。  
 
@@ -11,12 +11,12 @@ MEIファイル（[ERIフォーマット](https://www.entis.jp/eridev/)）を無
 通常はこちらではなく、FFmpegを用いて変換するのが良いでしょう。  
 
 ```bat
-MeiToAvi.exe video.mei video.avi
+mei2avi.exe video.mei video.avi
 ```
 
 ### [FFmpeg](https://ffmpeg.org/)を用いて変換する
 
-MeiToAviでは出力ファイルに`-`を指定することで変換したデータを標準出力に出力できます。  
+mei2aviでは出力ファイルに`-`を指定することで変換したデータを標準出力に出力できます。  
 これを[FFmpeg](https://ffmpeg.org/)とパイプで繋げることで、ファイルを経由せずにMEIファイルを他の形式に変換できます。  
 
 以下にはよく使うと思われる例を示しますが、ここに挙げた以外の変換も可能です。  
@@ -26,7 +26,7 @@ MeiToAviでは出力ファイルに`-`を指定することで変換したデー
 video.meiをcrf値18でvideo.mp4に変換します。  
 
 ```bat
-MeiToAvi.exe video.mei - | ffmpeg -i pipe:0.avi -crf 18 video.mp4
+mei2avi.exe video.mei - | ffmpeg -i pipe:0.avi -crf 18 video.mp4
 ```
 
 #### 音声をWAVで取り出す
@@ -34,7 +34,7 @@ MeiToAvi.exe video.mei - | ffmpeg -i pipe:0.avi -crf 18 video.mp4
 video.meiの音声をvideo.wavに取り出します。  
 
 ```bat
-MeiToAvi.exe video.mei - | ffmpeg -i pipe:0.avi -vn -c:a copy video.wav
+mei2avi.exe video.mei - | ffmpeg -i pipe:0.avi -vn -c:a copy video.wav
 ```
 
 ### [FFplay](https://ffmpeg.org/ffplay.html)で再生する
@@ -42,7 +42,7 @@ MeiToAvi.exe video.mei - | ffmpeg -i pipe:0.avi -vn -c:a copy video.wav
 以下の様に実行するとvideo.meiを[FFplay](https://ffmpeg.org/ffplay.html)で再生できます。  
 
 ```bat
-MeiToAvi.exe video.mei - | ffplay pipe:0.avi
+mei2avi.exe video.mei - | ffplay pipe:0.avi
 ```
 
 ## ビルド方法
@@ -56,7 +56,7 @@ MeiToAvi.exe video.mei - | ffplay pipe:0.avi
 
 ### 2. ビルド
 
-Visual Studio 2019でMeiToAvi.slnを開き、ソリューションをビルドします。  
+Visual Studio 2019でmei2avi.slnを開き、ソリューションをビルドします。  
 
 実行ファイルはBuild/Win32/DebugまたはBuild/Win32/Releaseディレクトリに出力されます。  
 
@@ -71,14 +71,14 @@ Visual Studio 2019でMeiToAvi.slnを開き、ソリューションをビルド�
 
 ## ライセンス
 
-MeiToAviはMIT Licenseのもと配布されます。  
+mei2aviはMIT Licenseのもと配布されます。  
 詳しくはLICENSE.txtをご覧ください。  
 
 ただし、使用しているライブラリについてはそのライブラリのライセンスが適用されます。  
 
 ## ライブラリ著作権表示
 
-MeiToAviは[EntisGLS](https://www.entis.jp/gls/)を使用しています。  
+mei2aviは[EntisGLS](https://www.entis.jp/gls/)を使用しています。  
 
 > EntisGLS version 4s.05  
 > Copyright (C) 1998-2014 理影, Entis soft.  
