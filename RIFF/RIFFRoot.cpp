@@ -29,14 +29,14 @@ std::streamsize RIFFRoot::GetSize() const {
 
 std::shared_ptr<SourceBase> RIFFRoot::GetSource() {
   if (!contentSource) {
-    throw std::runtime_error("ROOT: call CreateSource before GetSource");
+    throw std::runtime_error("RIFFRoot: call CreateSource before GetSource");
   }
   return contentSource;
 }
 
 
 void RIFFRoot::SetParent(RIFFBase* parent) {
-  throw std::logic_error("ROOT: SetParent is not available");
+  throw std::logic_error("RIFFRoot: SetParent is not available");
 }
 
 

@@ -38,7 +38,7 @@ std::streamsize RIFFList::GetSize() const {
 
 std::shared_ptr<SourceBase> RIFFList::GetSource() {
   if (!mSource) {
-    throw std::runtime_error("LIST: call CreateSource before GetSource");
+    throw std::runtime_error("RIFFList: call CreateSource before GetSource");
   }
   return mSource;
 }
@@ -49,7 +49,7 @@ void RIFFList::CreateSource() {
 
   std::streamsize childrenSize = GetContentSize();
   if (childrenSize + 4 > std::numeric_limits<decltype(Header::size)>::max()) {
-    throw std::runtime_error("LIST: children too large");
+    throw std::runtime_error("RIFFList: children too large");
   }
   mHeader.size = static_cast<std::uint32_t>(childrenSize + 4);
 

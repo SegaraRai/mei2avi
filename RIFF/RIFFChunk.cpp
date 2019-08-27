@@ -19,7 +19,7 @@ void RIFFChunk::ChunkCreateSource() {
   const auto contentSize = mContentSource->GetSize();
 
   if (contentSize > std::numeric_limits<std::uint32_t>::max()) {
-    throw std::runtime_error("CHUNK: content too large");
+    throw std::runtime_error("RIFFChunk: content too large");
   }
 
   const Header header{
@@ -41,7 +41,7 @@ void RIFFChunk::ChunkCreateSource() {
 
 
 std::streamsize RIFFChunk::GetOffsetOf(const RIFFBase* child) const {
-  throw std::runtime_error("CHUNK: GetOffsetOf is not supported for RIFFChunk");
+  throw std::runtime_error("RIFFChunk: GetOffsetOf is not available");
 }
 
 
