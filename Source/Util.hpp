@@ -6,7 +6,7 @@
 #include <ios>
 
 
-void CheckReadRange(std::size_t size, std::streamsize offset, std::streamsize maxSize) {
+inline void CheckReadRange(std::size_t size, std::streamsize offset, std::streamsize maxSize) {
   assert(offset >= 0);
   assert(maxSize >= 0);
 
