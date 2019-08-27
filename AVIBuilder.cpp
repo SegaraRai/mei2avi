@@ -370,13 +370,19 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   //
 
+  // ### JUNK (prepend)
+  if (mJunkSize && (mBuilderFlags & PrependJunk)) {
+    auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<NullSource>(mJunkSize));
+    riffAvi->AppendChild(junk);
+  }
+
   // ### LIST-INFO
   if (mListInfo) {
     riffAvi->AppendChild(mListInfo);
   }
 
   // ### JUNK
-  if (mJunkSize) {
+  if (mJunkSize && !(mBuilderFlags & PrependJunk)) {
     auto junk = std::make_shared<RIFFChunk>(AVI::GetFourCC("JUNK"), std::make_shared<NullSource>(mJunkSize));
     riffAvi->AppendChild(junk);
   }
