@@ -7,6 +7,7 @@
 
 #include "ConcatenatedSource.hpp"
 #include "SourceBase.hpp"
+#include "Util.hpp"
 
 
 void ConcatenatedSource::ConstructBinarySearchTree(std::size_t treeIndex, const PartialSource* sources, std::size_t sourceOffset, std::size_t numSources) {
@@ -58,6 +59,8 @@ std::streamsize ConcatenatedSource::GetSize() const {
 
 
 void ConcatenatedSource::Read(std::uint8_t* data, std::size_t size, std::streamsize offset) {
+  CheckReadRange(size, offset, mTotalSize);
+
   const auto firstIndex = GetIndexFromOffset(offset);
   const std::streamsize offsetEnd = offset + size;
   std::streamsize currentOffset = offset;

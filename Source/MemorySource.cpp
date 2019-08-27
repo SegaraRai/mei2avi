@@ -7,6 +7,8 @@
 #include <utility>
 
 #include "MemorySource.hpp"
+#include "SourceBase.hpp"
+#include "Util.hpp"
 
 
 MemorySource::MemorySource(const std::uint8_t* data, std::size_t size) :
@@ -50,12 +52,11 @@ std::streamsize MemorySource::GetSize() const {
 
 
 void MemorySource::Read(std::uint8_t* data, std::size_t size, std::streamsize offset) {
+  CheckReadRange(size, offset, mSize);
+
   if (!size) {
     return;
   }
-
-  assert(offset >= 0);
-  assert(offset + size <= mSize);
 
   std::memcpy(data, mData.get() + offset, size);
 }

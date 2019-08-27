@@ -6,6 +6,8 @@
 #include <memory>
 
 #include "CachedSource.hpp"
+#include "SourceBase.hpp"
+#include "Util.hpp"
 
 
 CachedSource::CachedSource(CacheStorage& cacheStorage, std::shared_ptr<SourceBase> source) :
@@ -22,6 +24,8 @@ std::streamsize CachedSource::GetSize() const {
 
 
 void CachedSource::Read(std::uint8_t* data, std::size_t size, std::streamsize offset) {
+  CheckReadRange(size, offset, mSize);
+
   const auto ptr = mPtrCacheStorage->Get(mCacheId);
   if (ptr) {
     std::memcpy(data, ptr->data.get() + offset, size);
