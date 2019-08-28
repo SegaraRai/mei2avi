@@ -29,7 +29,7 @@ public:
 
 private:
   CacheStorage mCacheStorage;
-  SSystem::SFile mFile;
+  std::unique_ptr<SSystem::SFileInterface> mFile;
   ERISA::SGLMovieFilePlayer mMovieFilePlayer;
   std::shared_ptr<SourceBase> mAvi;
 

@@ -279,10 +279,16 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
   mAvi()
 {
   // open file
-  CheckError(mFile.Open(filePath.c_str(), SSystem::SFileOpener::OpenFlag::modeRead | SSystem::SFileOpener::OpenFlag::shareRead), "cannot open file"s);
+  {
+    auto file = SSystem::SFileOpener::DefaultNewOpenFile(filePath.c_str(), SSystem::SFileOpener::OpenFlag::modeRead | SSystem::SFileOpener::OpenFlag::shareRead);
+    if (!file) {
+      throw std::runtime_error("cannot open file"s);
+    }
+    mFile.reset(file);
+  }
 
   // open as video
-  CheckError(mMovieFilePlayer.OpenMovieFile(&mFile, false), "cannot open video"s);
+  CheckError(mMovieFilePlayer.OpenMovieFile(mFile.get(), false), "cannot open video"s);
 
   // get media
   const auto& mediaFile = mMovieFilePlayer.GetMediaFile();

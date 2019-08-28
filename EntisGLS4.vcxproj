@@ -186,7 +186,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EntisGLS4s.05\Source\glsl\glsl_header_phong.h" />
     <ClInclude Include="EntisGLS4s.05\Include\android\app\sakura2vm.h" />
     <ClInclude Include="EntisGLS4s.05\Include\android\gls4jclass\EntisGLActivity_java.h" />
     <ClInclude Include="EntisGLS4s.05\Include\android\gls4jclass\EntisServiceBootReceiver_java.h" />

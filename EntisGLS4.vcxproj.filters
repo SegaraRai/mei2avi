@@ -675,9 +675,6 @@
     <ClInclude Include="EntisGLS4s.05\Include\cotopha\objected\xml_document.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EntisGLS4s.05\Source\glsl\glsl_header_phong.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntisGLS4s.05\Source\win32\sakura\ssys_stdapi.cpp">
