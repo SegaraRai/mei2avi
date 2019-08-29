@@ -339,7 +339,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
       offset += audioBuffer.GetLength();
 
 #ifdef _DEBUG
-      OutputDebugStringW((L"Read audio: "s + std::to_wstring(offset) + L" / "s + std::to_wstring(audioData.size()) + L"\n"s).c_str());
+      OutputDebugStringW((L"Read audio: "s + std::to_wstring(offset) + L" / "s + std::to_wstring(audioDataSize) + L"\n"s).c_str());
 #endif
     }
 
