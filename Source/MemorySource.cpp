@@ -29,9 +29,9 @@ MemorySource::MemorySource(std::size_t size) :
   }
 }
 
-MemorySource::MemorySource(std::shared_ptr<std::uint8_t[]>&& data, std::size_t size) :
+MemorySource::MemorySource(std::shared_ptr<std::uint8_t[]> data, std::size_t size) :
   mSize(size),
-  mData(std::move(data))
+  mData(data)
 {}
 
 

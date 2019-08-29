@@ -16,7 +16,7 @@ class MemorySource : public SourceBase {
 public:
   MemorySource(const std::uint8_t* data, std::size_t size);
   MemorySource(std::size_t size);
-  MemorySource(std::shared_ptr<std::uint8_t[]>&& data, std::size_t size);
+  MemorySource(std::shared_ptr<std::uint8_t[]> data, std::size_t size);
   MemorySource(SourceBase& source);
 
   std::streamsize GetSize() const override;
