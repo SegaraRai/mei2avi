@@ -21,6 +21,7 @@
 #include "Fraction.hpp"
 #include "Source/CachedSource.hpp"
 #include "Source/MemorySource.hpp"
+#include "Source/PartialSource.hpp"
 
 #include <Windows.h>
 
@@ -168,7 +169,6 @@ namespace {
 
 
   class MeiAudioStream : public AVIBuilder::AVIStream {
-    std::vector<std::uint8_t> mAudioData;
     std::uint_fast32_t mAudioBlockSample;
     std::uint_fast32_t mBitsPerSample;
     std::uint_fast32_t mNumChannels;
@@ -179,21 +179,23 @@ namespace {
     AVI::AVIStreamHeader mStrh;
     WAVEFORMATEX mStrf;
     std::shared_ptr<MemorySource> mStrfMemorySource;
+    std::shared_ptr<MemorySource> mFullAudioMemorySource;
     std::vector<std::shared_ptr<SourceBase>> mBlockSources;
 
   public:
-    MeiAudioStream(std::vector<std::uint8_t>&& audioData, std::uint_fast32_t audioBlockSample, std::uint_fast32_t bitsPerSample, std::uint_fast32_t numChannels, std::uint_fast32_t samplingRate) :
-      mAudioData(std::move(audioData)),
+    MeiAudioStream(std::shared_ptr<std::uint8_t[]> audioData, std::size_t audioDataSize, std::uint_fast32_t audioBlockSample, std::uint_fast32_t bitsPerSample, std::uint_fast32_t numChannels, std::uint_fast32_t samplingRate) :
       mAudioBlockSample(audioBlockSample),
       mBitsPerSample(bitsPerSample),
       mNumChannels(numChannels),
       mSamplingRate(samplingRate),
       mBlockSize(mBitsPerSample / 8 * mNumChannels),
-      mNumSamples(mAudioData.size() / mBlockSize),
+      mNumSamples(audioDataSize / mBlockSize),
       mNumBlocks((mNumSamples + audioBlockSample - 1) / audioBlockSample),
       mStrh(),
       mStrf{},
-      mStrfMemorySource()
+      mStrfMemorySource(),
+      mFullAudioMemorySource(std::make_shared<MemorySource>(audioData, audioDataSize)),
+      mBlockSources()
     {
       if (mNumBlocks == 0) {
         throw std::runtime_error("no audio");
@@ -232,10 +234,10 @@ namespace {
 
       std::size_t offset = 0;
       for (std::size_t i = 0; i < mNumBlocks - 1; i++) {
-        mBlockSources.push_back(std::make_shared<MemorySource>(mAudioData.data() + offset, audioBlockSize));
+        mBlockSources.push_back(std::make_shared<PartialSource>(mFullAudioMemorySource, offset, audioBlockSize));
         offset += audioBlockSize;
       }
-      mBlockSources.push_back(std::make_shared<MemorySource>(mAudioData.data() + offset, mAudioData.size() - offset));
+      mBlockSources.push_back(std::make_shared<PartialSource>(mFullAudioMemorySource, offset, audioDataSize - offset));
     }
 
     std::uint32_t GetFourCC() const override {
@@ -302,7 +304,8 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
 
 
   // load audio
-  std::vector<std::uint8_t> audioData;
+  std::shared_ptr<std::uint8_t[]> audioData;
+  std::size_t audioDataSize;
   std::uint_fast32_t audioBitsPerSample = 0;
   std::uint_fast32_t audioNumChannels = 0;
   std::uint_fast32_t audioSamplingRate = 0;
@@ -325,13 +328,14 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
     // 予め読んでいるのは事前にチャンクの配置を決定しておく必要があるため
     // meiファイルでの配置をそのままAVIにするのも考えたがそれはそれで面倒そうだった
 
-    audioData.resize(audioNumSamples * audioBlockSize);
+    audioDataSize = audioNumSamples * audioBlockSize;
+    audioData = std::shared_ptr<std::uint8_t[]>(std::make_unique<std::uint8_t[]>(audioDataSize));
 
     SSystem::SArray<std::uint8_t> audioBuffer;
     std::uint_fast32_t offset = 0;
-    while (offset < audioData.size()) {
+    while (offset < audioDataSize) {
       soundFilePlayer.GetNextWaveBuffer(audioBuffer);
-      std::memcpy(audioData.data() + offset, audioBuffer.GetArray(), audioBuffer.GetLength());
+      std::memcpy(audioData.get() + offset, audioBuffer.GetArray(), audioBuffer.GetLength());
       offset += audioBuffer.GetLength();
 
 #ifdef _DEBUG
@@ -342,7 +346,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
     soundFilePlayer.Close();
     fileForSound.Close();
 
-    if (audioData.empty()) {
+    if (!audioDataSize) {
       hasAudio = false;
     }
   }
@@ -431,7 +435,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
 
   // audio stream
   if (hasAudio) {
-    auto audioStream = std::make_shared<MeiAudioStream>(std::move(audioData), audioSamplesPerFrame, audioBitsPerSample, audioNumChannels, audioSamplingRate);
+    auto audioStream = std::make_shared<MeiAudioStream>(audioData, audioDataSize, audioSamplesPerFrame, audioBitsPerSample, audioNumChannels, audioSamplingRate);
     aviBuilder.AddStream(audioStream, false);
   }
 
