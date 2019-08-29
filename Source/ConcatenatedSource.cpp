@@ -13,30 +13,30 @@
 
 std::size_t ConcatenatedSource::GetIndexFromOffset(std::streamsize offset) const {
   assert(0 <= offset && offset < mTotalSize);
-  assert(!mPartialSources.empty());
+  assert(!mPieces.empty());
 
   // cache
 
-  assert(mLastIndex < mPartialSources.size());
-  const auto& lastPartialSource = mPartialSources[mLastIndex];
-  if (lastPartialSource.offset <= offset && offset < lastPartialSource.offset + lastPartialSource.size) {
+  assert(mLastUsedIndex < mPieces.size());
+  const auto& lastUsedPiece = mPieces[mLastUsedIndex];
+  if (lastUsedPiece.offset <= offset && offset < lastUsedPiece.offset + lastUsedPiece.size) {
     //std::wcerr << L"cache hit!" << std::endl;
-    return mLastIndex;
+    return mLastUsedIndex;
   }
   //std::wcerr << L"cache miss" << std::endl;
 
   // binary search
 
   std::size_t leftIndex = 0;
-  std::size_t rightIndex = mPartialSources.size() - 1;
+  std::size_t rightIndex = mPieces.size() - 1;
 
   while (leftIndex <= rightIndex) {
     const std::size_t middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
-    const auto& partialSource = mPartialSources[middleIndex];
-    if (partialSource.offset > offset) {
+    const auto& piece = mPieces[middleIndex];
+    if (piece.offset > offset) {
       // search for left
       rightIndex = middleIndex - 1;
-    } else if (partialSource.offset + partialSource.size <= offset) {
+    } else if (piece.offset + piece.size <= offset) {
       // search for right
       leftIndex = middleIndex + 1;
     } else {
@@ -63,19 +63,19 @@ void ConcatenatedSource::Read(std::uint8_t* data, std::size_t size, std::streams
   std::size_t dataOffset = 0;
   std::size_t index = firstIndex;
   while (currentOffset != offsetEnd) {
-    auto& partialSource = mPartialSources[index];
-    const auto streamOffset = currentOffset - partialSource.offset;
-    const auto readSize = static_cast<std::size_t>(std::min<std::streamsize>(partialSource.size - streamOffset, offsetEnd - currentOffset));
-    partialSource.source->Read(data + dataOffset, readSize, streamOffset);
+    auto& piece = mPieces[index];
+    const auto streamOffset = currentOffset - piece.offset;
+    const auto readSize = static_cast<std::size_t>(std::min<std::streamsize>(piece.size - streamOffset, offsetEnd - currentOffset));
+    piece.source->Read(data + dataOffset, readSize, streamOffset);
     currentOffset += readSize;
     dataOffset += readSize;
     index++;
   }
 
   // cache
-  assert(!mPartialSources.empty());
-  mLastIndex = index - 1;
-  if (index < mPartialSources.size() && currentOffset == mPartialSources[index].offset) {
-    mLastIndex++;
+  assert(!mPieces.empty());
+  mLastUsedIndex = index - 1;
+  if (index < mPieces.size() && currentOffset == mPieces[index].offset) {
+    mLastUsedIndex++;
   }
 }

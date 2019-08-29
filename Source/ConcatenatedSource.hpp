@@ -14,27 +14,27 @@
 
 
 class ConcatenatedSource : public SourceBase {
-  struct PartialSource {
+  struct Piece {
     std::streamsize offset;
     std::streamsize size;
     std::shared_ptr<SourceBase> source;
   };
 
-  std::vector<PartialSource> mPartialSources;
+  std::vector<Piece> mPieces;
   std::streamsize mTotalSize;
-  std::size_t mLastIndex;
+  std::size_t mLastUsedIndex;
 
   std::size_t GetIndexFromOffset(std::streamsize offset) const;
 
 public:
   template<typename T>
   ConcatenatedSource(const T& sources) :
-    mPartialSources(),
+    mPieces(),
     mTotalSize(0),
-    mLastIndex(0)
+    mLastUsedIndex(0)
   {
     const auto numSources = std::size(sources);
-    mPartialSources.reserve(numSources);
+    mPieces.reserve(numSources);
 
     std::streamoff offset = 0;
     for (const auto& source : sources) {
@@ -43,7 +43,7 @@ public:
       if (size == 0) {
         continue;
       }
-      mPartialSources.push_back(PartialSource{
+      mPieces.push_back(Piece{
         offset,
         size,
         source,
