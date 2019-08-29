@@ -129,7 +129,9 @@ int xwmain(int argc, wchar_t* argv[]) {
 
   std::ofstream ofs;
   if (useStdOut) {
-    _setmode(_fileno(stdout), _O_BINARY);
+    if (_setmode(_fileno(stdout), _O_BINARY) == -1) {
+      throw std::runtime_error("_setmode failed"s);
+    }
   } else {
     ofs.exceptions(std::ios::failbit | std::ios::badbit);
     ofs.open(outFile, std::ios::binary);
