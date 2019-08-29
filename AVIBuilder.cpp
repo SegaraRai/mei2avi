@@ -488,7 +488,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       if (!isAvix) {
         // idx1
         auto idx1MemorySource = std::make_shared<MemorySource>(sizeof(AVI::AVIINDEXENTRY) * blocks.size());
-        const auto indexEntries = reinterpret_cast<AVI::AVIINDEXENTRY*>(idx1MemorySource->GetData());
+        const auto indexEntries = reinterpret_cast<AVI::AVIINDEXENTRY*>(idx1MemorySource->GetData().get());
         const auto baseOffset = avixListMovi->GetOffset() + 8;    // I don't know why +8, but FFmpeg does
         for (std::size_t i = 0; i < blocks.size(); i++) {
           const auto& block = blocks[i];
@@ -502,7 +502,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
         idx1->SetContentSource(idx1MemorySource);
 
         // avih
-        reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData())->dwTotalFrames = streamInfoArray[mPrimaryVideoStreamIndex.value()].currentBlockIndex + 1;    // I don't know why +1, but FFmpeg does
+        reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData().get())->dwTotalFrames = streamInfoArray[mPrimaryVideoStreamIndex.value()].currentBlockIndex + 1;    // I don't know why +1, but FFmpeg does
       }
 
       OnFinishRiffAvi(listMovi, isAvix);
@@ -640,12 +640,12 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     // fix qwBaseOffset (ixxx, standard index)
     for (std::size_t j = 0; j < streamInfo.riffs.size(); j++) {
       auto& perRiffInfo = streamInfo.riffs[j];
-      reinterpret_cast<AVI::AVISTDINDEX*>(perRiffInfo.ixxxMemorySource->GetData())->qwBaseOffset = static_cast<std::uint64_t>(perRiffInfo.ixxxBaseRiff->GetOffset());
+      reinterpret_cast<AVI::AVISTDINDEX*>(perRiffInfo.ixxxMemorySource->GetData().get())->qwBaseOffset = static_cast<std::uint64_t>(perRiffInfo.ixxxBaseRiff->GetOffset());
     }
 
     // fix qwOffset (indx, super index)
     auto indxMemorySource = streamInfo.indxMemorySource;
-    const auto indxEntries = reinterpret_cast<AVI::AVISUPERINDEXENTRY*>(indxMemorySource->GetData() + sizeof(AVI::AVISUPERINDEX));
+    const auto indxEntries = reinterpret_cast<AVI::AVISUPERINDEXENTRY*>(indxMemorySource->GetData().get() + sizeof(AVI::AVISUPERINDEX));
     for (std::size_t j = 0; j < streamInfo.riffs.size(); j++) {
       auto& perRiffInfo = streamInfo.riffs[j];
       indxEntries[j].qwOffset = static_cast<std::uint64_t>(perRiffInfo.ixxx->GetOffset());
@@ -661,11 +661,11 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       continue;
     }
 
-    reinterpret_cast<AVI::AVIStreamHeader*>(streamInfo.strhMemorySource->GetData())->dwSuggestedBufferSize = streamInfo.maxDataSize;
+    reinterpret_cast<AVI::AVIStreamHeader*>(streamInfo.strhMemorySource->GetData().get())->dwSuggestedBufferSize = streamInfo.maxDataSize;
   }
 
   // fix avih
-  auto ptrAvihData = reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData());
+  auto ptrAvihData = reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData().get());
   ptrAvihData->dwSuggestedBufferSize = maxChunkSize;
   ptrAvihData->dwMaxBytesPerSec = 0;
   for (const auto& streamInfo : streamInfoArray) {

@@ -29,7 +29,7 @@ MemorySource::MemorySource(std::size_t size) :
   }
 }
 
-MemorySource::MemorySource(std::unique_ptr<std::uint8_t[]>&& data, std::size_t size) :
+MemorySource::MemorySource(std::shared_ptr<std::uint8_t[]>&& data, std::size_t size) :
   mSize(size),
   mData(std::move(data))
 {}
@@ -61,6 +61,6 @@ void MemorySource::Read(std::uint8_t* data, std::size_t size, std::streamsize of
 }
 
 
-std::uint8_t* MemorySource::GetData() {
-  return mData.get();
+std::shared_ptr<std::uint8_t[]> MemorySource::GetData() {
+  return mData;
 }
