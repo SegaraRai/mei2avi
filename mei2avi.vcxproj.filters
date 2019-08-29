@@ -57,9 +57,6 @@
     <ClCompile Include="Source\ConcatenatedSource.cpp">
       <Filter>ソース ファイル\Source</Filter>
     </ClCompile>
-    <ClCompile Include="MultiMon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CachedSource.cpp">
       <Filter>ソース ファイル\Source</Filter>
     </ClCompile>

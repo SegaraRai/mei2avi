@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{ce87eadf-321b-42d2-b6a6-b601aae23dc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EntisGLS4s.05\Include\cotopha\cotopha.h">
@@ -1150,6 +1153,9 @@
     </ClCompile>
     <ClCompile Include="EntisGLS4s.05\Source\opengl\sakuragl\sgl_window_implement.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiMon.cpp">
+      <Filter>external</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

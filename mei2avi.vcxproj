@@ -34,7 +34,6 @@
     <ClCompile Include="Source\NullSource.cpp" />
     <ClCompile Include="Source\PartialSource.cpp" />
     <ClCompile Include="Startup.cpp" />
-    <ClCompile Include="MultiMon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp" />

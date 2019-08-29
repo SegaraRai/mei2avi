@@ -566,6 +566,7 @@
     <ClCompile Include="EntisGLS4s.05\Source\win32\sakura\ssys_stdapi.cpp" />
     <ClCompile Include="EntisGLS4s.05\Source\win32\sakura\ssys_win_internet_file.cpp" />
     <ClCompile Include="EntisGLS4s.05\Source\win32\sakura\ssys_win_resource_file.cpp" />
+    <ClCompile Include="MultiMon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

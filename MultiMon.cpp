@@ -1,6 +1,8 @@
-#pragma warning(disable:4996)
+#ifdef DISABLE_ENTIS_GLS4_EXPORTS
 
-#include <Windows.h>
+# include <Windows.h>
 
-#define COMPILE_MULTIMON_STUBS
-#include <MultiMon.h>
+# define COMPILE_MULTIMON_STUBS
+# include <MultiMon.h>
+
+#endif
