@@ -72,6 +72,9 @@
     <ClCompile Include="RIFF\RIFFDirBase.cpp">
       <Filter>ソース ファイル\RIFF</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PartialSource.cpp">
+      <Filter>ソース ファイル\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApproxFraction.hpp">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="XEntisGLS4Hack.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PartialSource.hpp">
+      <Filter>ヘッダー ファイル\Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

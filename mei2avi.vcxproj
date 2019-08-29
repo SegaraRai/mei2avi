@@ -32,6 +32,7 @@
     <ClCompile Include="Source\ConcatenatedSource.cpp" />
     <ClCompile Include="Source\MemorySource.cpp" />
     <ClCompile Include="Source\NullSource.cpp" />
+    <ClCompile Include="Source\PartialSource.cpp" />
     <ClCompile Include="Startup.cpp" />
     <ClCompile Include="MultiMon.cpp" />
   </ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="Source\ConcatenatedSource.hpp" />
     <ClInclude Include="Source\MemorySource.hpp" />
     <ClInclude Include="Source\NullSource.hpp" />
+    <ClInclude Include="Source\PartialSource.hpp" />
     <ClInclude Include="Source\SourceBase.hpp" />
     <ClInclude Include="Source\Util.hpp" />
     <ClInclude Include="XEntisGLS4Hack.hpp" />
