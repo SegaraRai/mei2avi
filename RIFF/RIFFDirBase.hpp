@@ -17,7 +17,7 @@ protected:
   std::deque<std::shared_ptr<RIFFBase>> children;
   std::shared_ptr<ConcatenatedSource> contentSource;
 
-  std::streamsize GetChildOffsetOf(const RIFFBase* child) const;
+  std::streamsize GetContentOffsetOf(const RIFFBase* child) const;
   std::streamsize GetContentSize() const;
   void CreateContentSource();
 

@@ -14,7 +14,7 @@
 
 
 std::streamsize RIFFList::GetOffsetOf(const RIFFBase* child) const {
-  return GetChildOffsetOf(child) + sizeof(Header);
+  return GetContentOffsetOf(child) + sizeof(Header);
 }
 
 

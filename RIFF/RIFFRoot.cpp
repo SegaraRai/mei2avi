@@ -8,7 +8,7 @@
 
 
 std::streamsize RIFFRoot::GetOffsetOf(const RIFFBase* child) const {
-  return GetChildOffsetOf(child);
+  return GetContentOffsetOf(child);
 }
 
 
@@ -36,7 +36,7 @@ std::shared_ptr<SourceBase> RIFFRoot::GetSource() {
 
 
 void RIFFRoot::SetParent(RIFFDirBase* parent) {
-  throw std::logic_error("RIFFRoot: SetParent is not available");
+  throw std::logic_error("RIFFRoot: root cannot have a parent");
 }
 
 

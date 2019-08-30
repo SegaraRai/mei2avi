@@ -9,7 +9,7 @@
 #include "../Source/SourceBase.hpp"
 
 
-std::streamsize RIFFDirBase::GetChildOffsetOf(const RIFFBase* child) const {
+std::streamsize RIFFDirBase::GetContentOffsetOf(const RIFFBase* child) const {
   std::streamsize offset = 0;
   auto itrChildren = children.cbegin();
   while (itrChildren->get() != child) {
