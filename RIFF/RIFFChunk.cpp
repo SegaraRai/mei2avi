@@ -40,11 +40,6 @@ void RIFFChunk::ChunkCreateSource() {
 }
 
 
-std::streamsize RIFFChunk::GetOffsetOf(const RIFFBase* child) const {
-  throw std::runtime_error("RIFFChunk: GetOffsetOf is not available");
-}
-
-
 RIFFChunk::RIFFChunk(std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource) :
   RIFFBase(),
   mChunkId(chunkId),

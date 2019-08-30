@@ -20,13 +20,6 @@ std::streamsize RIFFDirBase::GetChildOffsetOf(const RIFFBase* child) const {
 }
 
 
-RIFFDirBase::RIFFDirBase() :
-  RIFFBase(),
-  children(),
-  contentSource()
-{}
-
-
 std::streamsize RIFFDirBase::GetContentSize() const {
   std::streamsize size = 0;
   for (const auto& child : children) {
@@ -45,6 +38,13 @@ void RIFFDirBase::CreateContentSource() {
   }
   contentSource = std::make_shared<ConcatenatedSource>(sources);
 }
+
+
+RIFFDirBase::RIFFDirBase() :
+  RIFFBase(),
+  children(),
+  contentSource()
+{}
 
 
 std::size_t RIFFDirBase::CountChildren() const {

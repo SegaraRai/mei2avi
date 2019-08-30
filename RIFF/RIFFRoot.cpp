@@ -35,7 +35,7 @@ std::shared_ptr<SourceBase> RIFFRoot::GetSource() {
 }
 
 
-void RIFFRoot::SetParent(RIFFBase* parent) {
+void RIFFRoot::SetParent(RIFFDirBase* parent) {
   throw std::logic_error("RIFFRoot: SetParent is not available");
 }
 

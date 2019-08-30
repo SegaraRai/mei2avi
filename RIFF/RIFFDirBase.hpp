@@ -18,12 +18,13 @@ protected:
   std::shared_ptr<ConcatenatedSource> contentSource;
 
   std::streamsize GetChildOffsetOf(const RIFFBase* child) const;
+  std::streamsize GetContentSize() const;
+  void CreateContentSource();
 
 public:
   RIFFDirBase();
 
-  std::streamsize GetContentSize() const;
-  void CreateContentSource();
+  virtual std::streamsize GetOffsetOf(const RIFFBase* child) const = 0;
 
   std::size_t CountChildren() const;
   RIFFBase* GetChild(std::size_t index);

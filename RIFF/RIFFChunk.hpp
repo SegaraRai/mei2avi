@@ -25,9 +25,6 @@ class RIFFChunk : public RIFFBase {
 
   void ChunkCreateSource();
 
-protected:
-  std::streamsize GetOffsetOf(const RIFFBase* child) const override;
-
 public:
   RIFFChunk(std::uint32_t chunkId, std::shared_ptr<SourceBase> contentSource);
   RIFFChunk(std::uint32_t chunkId);

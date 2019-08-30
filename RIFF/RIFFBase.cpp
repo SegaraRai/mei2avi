@@ -2,6 +2,7 @@
 #include <ios>
 
 #include "RIFFBase.hpp" 
+#include "RIFFDirBase.hpp" 
 
 
 RIFFBase::RIFFBase() :
@@ -14,7 +15,7 @@ std::streamsize RIFFBase::GetOffset() const {
 }
 
 
-void RIFFBase::SetParent(RIFFBase* parent) {
+void RIFFBase::SetParent(RIFFDirBase* parent) {
   assert(!this->parent);
   assert(parent);
   this->parent = parent;

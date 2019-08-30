@@ -9,11 +9,11 @@
 #include "../Source/SourceBase.hpp"
 
 
+class RIFFDirBase;
+
 class RIFFBase {
 protected:
-  RIFFBase* parent;
-
-  virtual std::streamsize GetOffsetOf(const RIFFBase* child) const = 0;
+  RIFFDirBase* parent;
 
 public:
   RIFFBase();
@@ -23,7 +23,7 @@ public:
   virtual std::streamsize GetSize() const = 0;
   virtual std::shared_ptr<SourceBase> GetSource() = 0;
 
-  virtual void SetParent(RIFFBase* parent);
+  virtual void SetParent(RIFFDirBase* parent);
 
   virtual void CreateSource();
 };
