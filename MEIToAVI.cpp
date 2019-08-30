@@ -197,9 +197,7 @@ namespace {
       mFullAudioMemorySource(std::make_shared<MemorySource>(audioData, audioDataSize)),
       mBlockSources()
     {
-      if (mNumBlocks == 0) {
-        throw std::runtime_error("no audio");
-      }
+      assert(mNumBlocks != 0);
 
       mStrh = AVI::AVIStreamHeader{
         FourCCauds,
@@ -290,7 +288,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
   }
 
   // open as video
-  CheckError(mMovieFilePlayer.OpenMovieFile(mFile.get(), false), "cannot open video"s);
+  CheckError(mMovieFilePlayer.OpenMovieFile(mFile.get(), false), "cannot open file as video"s);
 
   // get media
   const auto& mediaFile = mMovieFilePlayer.GetMediaFile();
@@ -315,7 +313,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
     CheckError(fileForSound.Open(filePath.c_str(), SSystem::SFileOpener::OpenFlag::modeRead | SSystem::SFileOpener::OpenFlag::shareRead), "cannot open file for audio"s);
 
     ERISA::SGLSoundFilePlayer soundFilePlayer;
-    CheckError(soundFilePlayer.OpenSoundFile(&fileForSound, false), "cannot open audio"s);
+    CheckError(soundFilePlayer.OpenSoundFile(&fileForSound, false), "cannot open file as audio"s);
 
     audioBitsPerSample = soundFilePlayer.GetBitsPerSample();
     audioNumChannels = soundFilePlayer.GetChannelCount();
