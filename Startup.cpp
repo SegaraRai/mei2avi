@@ -1,6 +1,10 @@
 // comment out the below line to minimize engine initialization 
 //#define USE_SAKURAGL_INITIALIZER 1
 
+#include <exception>
+#include <iostream>
+#include <string_view>
+
 #include <sakura/sakura.h>
 #include <sakuragl/sakuragl.h>
 
@@ -12,6 +16,8 @@
 #endif
 
 int xwmain(int argc, wchar_t* argv[]);
+
+using namespace std::literals;
 
 
 int wmain(int argc, wchar_t* argv[]) {
@@ -34,7 +40,19 @@ int wmain(int argc, wchar_t* argv[]) {
 
   SSystem::SetMemoryAllocationMode(SSystem::mallocModeGlobal);
 
+#ifdef NDEBUG
+  try {
+    ret = xwmain(argc, argv);
+  } catch (std::exception exception) {
+    std::cerr << exception.what() << std::endl;
+    ret = 11;
+  } catch (...) {
+    std::wcerr << L"an error occurred"sv << std::endl;
+    ret = 11;
+  }
+#else
   ret = xwmain(argc, argv);
+#endif
 
 #if USE_SAKURAGL_INITIALIZER
   SakuraGL::Finalize();
