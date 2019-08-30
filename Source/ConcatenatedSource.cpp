@@ -34,10 +34,10 @@ std::size_t ConcatenatedSource::GetIndexFromOffset(std::streamsize offset) const
     const std::size_t middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
     const auto& piece = mPieces[middleIndex];
     if (piece.offset > offset) {
-      // search for left
+      // left
       rightIndex = middleIndex - 1;
     } else if (piece.offset + piece.size <= offset) {
-      // search for right
+      // right
       leftIndex = middleIndex + 1;
     } else {
       // found
