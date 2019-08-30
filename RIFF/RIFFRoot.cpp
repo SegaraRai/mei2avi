@@ -17,6 +17,11 @@ RIFFRoot::RIFFRoot() :
 {}
 
 
+RIFFBase::Type RIFFRoot::GetType() const {
+  return Type::Root;
+}
+
+
 std::streamsize RIFFRoot::GetOffset() const {
   return 0;
 }

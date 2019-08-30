@@ -12,12 +12,21 @@
 class RIFFDirBase;
 
 class RIFFBase {
+public:
+  enum class Type {
+    Chunk,
+    List,
+    Root,
+  };
+
 protected:
   RIFFDirBase* parent;
 
 public:
   RIFFBase();
   virtual ~RIFFBase() = default;
+
+  virtual Type GetType() const = 0;
 
   virtual std::streamsize GetOffset() const;
   virtual std::streamsize GetSize() const = 0;

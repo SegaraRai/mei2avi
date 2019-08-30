@@ -17,10 +17,14 @@ protected:
 public:
   RIFFRoot();
 
+  Type GetType() const override;
+
   std::streamsize GetOffset() const override;
   std::streamsize GetSize() const override;
   std::shared_ptr<SourceBase> GetSource() override;
+
   void SetParent(RIFFDirBase* parent) override;
+
   void CreateSource() override;
 };
 

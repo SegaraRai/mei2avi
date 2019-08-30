@@ -31,6 +31,11 @@ RIFFList::RIFFList(std::uint32_t listId, std::uint32_t chunkId) :
 {}
 
 
+RIFFBase::Type RIFFList::GetType() const {
+  return Type::List;
+}
+
+
 std::streamsize RIFFList::GetSize() const {
   return GetContentSize() + sizeof(Header);
 }

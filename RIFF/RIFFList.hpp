@@ -31,6 +31,8 @@ protected:
 public:
   RIFFList(std::uint32_t listId, std::uint32_t chunkId);
 
+  Type GetType() const override;
+
   std::streamsize GetSize() const override;
   std::shared_ptr<SourceBase> GetSource() override;
   void CreateSource() override;

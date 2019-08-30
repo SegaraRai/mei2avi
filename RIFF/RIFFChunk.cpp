@@ -55,6 +55,11 @@ RIFFChunk::RIFFChunk(std::uint32_t chunkId) :
 {}
 
 
+RIFFBase::Type RIFFChunk::GetType() const {
+  return Type::Chunk;
+}
+
+
 std::streamsize RIFFChunk::GetSize() const {
   return mSource->GetSize();
 }
