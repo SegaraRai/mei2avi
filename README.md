@@ -47,14 +47,16 @@ mei2avi.exe video.mei - | ffplay pipe:0.avi
 
 ## ビルド方法
 
-### 1. [EntisGLS](https://www.entis.jp/gls/)の導入
+### 1. リポジトリのクローン
 
-[EntisGLS](https://www.entis.jp/gls/)は無許可での再配布を禁じているため、リポジトリに含めていません。  
-最初にEntisGLS version 4s.05をダウンロードし、EntisGLS4s.05ディレクトリをソースツリーのルートに置いてください。  
+このリポジトリをクローンします。  
+その際、再帰的に（サブモジュールも含めて）かつ改行コードはLFで（gitconfigで`core.autocrlf=input`にして）クローンしてください。  
 
-また、コンパイルを通すためにEntisGLS4s.05内のSource/common/sakura/ssys_std_ui.cppファイルについて、`ConvertFileDialogFilter`関数の宣言と定義の戻り値を`char *`から`const char *`に変更してください（357行目と506行目）。  
+### 2. [EntisGLS](https://www.entis.jp/gls/)の導入
 
-### 2. ビルド
+[EntisGLS4Build](https://github.com/SegaraRai/EntisGLS4Build)のREADME.mdを参照してリポジトリのEntisGLS4Buildディレクトリ内に[EntisGLS](https://www.entis.jp/gls/)を導入してください。  
+
+### 3. ビルド
 
 Visual Studio 2019でmei2avi.slnを開き、ソリューションをビルドします。  
 
