@@ -10,8 +10,9 @@
 
 
 constexpr Fraction<std::uint_fast32_t> ApproxFraction(Fraction<std::uint_fast32_t> fraction) {
-  constexpr std::array<Fraction<std::uint_fast32_t>, 2> PredefinedCandidates = {
+  constexpr std::array<Fraction<std::uint_fast32_t>, 3> PredefinedCandidates = {
     Fraction<std::uint_fast32_t>{1,     1},
+    Fraction<std::uint_fast32_t>{24000, 1001},    // 23.976 (23.98)
     Fraction<std::uint_fast32_t>{30000, 1001},    // 29.97
   };
 
