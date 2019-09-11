@@ -252,7 +252,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       throw std::runtime_error("dwRate must not be zero");
     }
 
-    const std::uint32_t fourCC = (stream.GetFourCC() & 0xFFFF0000) | IndexToFourCC(i);
+    const std::uint32_t fourCC = (stream.GetFourCC() & 0xFFFF0000) | IndexToFourCC(static_cast<unsigned int>(i));
 
     std::uint_fast32_t maxBlocksPerSec = (strh.dwRate + strh.dwScale - 1) / strh.dwScale;
     if (maxBlocksPerSec == 0) {
@@ -438,13 +438,13 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     // 次にブロックを置くストリーム
     const std::size_t nextStreamIndex = finished ? 0 : *std::min_element(remainingStreams.cbegin(), remainingStreams.cend(), [this, &streamInfoArray] (std::size_t a, std::size_t b) {
-      const auto timeA = streamInfoArray[a].timeCoef * mStreams[a]->GetBlockInfo(streamInfoArray[a].currentBlockIndex).startTime;
-      const auto timeB = streamInfoArray[b].timeCoef * mStreams[b]->GetBlockInfo(streamInfoArray[b].currentBlockIndex).startTime;
+      const auto timeA = streamInfoArray[a].timeCoef * mStreams[a]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[a].currentBlockIndex)).startTime;
+      const auto timeB = streamInfoArray[b].timeCoef * mStreams[b]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[b].currentBlockIndex)).startTime;
       return timeA == timeB ? a < b : timeA < timeB;
     });
 
     // 次のチャンクの大きさ
-    const std::uint_fast32_t nextChunkSize = finished ? 0 : 8 + mStreams[nextStreamIndex]->GetBlockInfo(streamInfoArray[nextStreamIndex].currentBlockIndex).size;
+    const std::uint_fast32_t nextChunkSize = finished ? 0 : 8 + mStreams[nextStreamIndex]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[nextStreamIndex].currentBlockIndex)).size;
 
     // finish this RIFF-AVI or RIFF-AVIX list
     if ((blocks.size() >= maxBlocks || sizeCount + nextChunkSize >= maxRiffSize || finished) && !initializeRiff) {
@@ -494,7 +494,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
           const auto& block = blocks[i];
           indexEntries[i] = AVI::AVIINDEXENTRY{
             streamInfoArray[block.streamIndex].fourCC,
-            mStreams[block.streamIndex]->GetBlockInfo(block.blockIndex).indexFlags,
+            mStreams[block.streamIndex]->GetBlockInfo(static_cast<std::uint_fast32_t>(block.blockIndex)).indexFlags,
             static_cast<std::uint32_t>(block.chunk->GetOffset() - baseOffset),            // relative to movi (absolute position is permitted also)
             static_cast<std::uint32_t>(block.chunk->GetSize() - 8),                       // I don't know why -8, but FFmpeg does
           };
@@ -502,7 +502,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
         idx1->SetContentSource(idx1MemorySource);
 
         // avih
-        reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData().get())->dwTotalFrames = streamInfoArray[mPrimaryVideoStreamIndex.value()].currentBlockIndex + 1;    // I don't know why +1, but FFmpeg does
+        reinterpret_cast<AVI::MainAVIHeader*>(avihMemorySource->GetData().get())->dwTotalFrames = static_cast<std::uint32_t>(streamInfoArray[mPrimaryVideoStreamIndex.value()].currentBlockIndex + 1);    // I don't know why +1, but FFmpeg does
       }
 
       OnFinishRiffAvi(listMovi, isAvix);
@@ -555,7 +555,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
     auto& streamInfo = streamInfoArray[nextStreamIndex];
     auto& perRIFFInfo = *perRIFFInfoArray[nextStreamIndex];
 
-    auto chunkSource = stream->GetBlockData(streamInfo.currentBlockIndex);
+    auto chunkSource = stream->GetBlockData(static_cast<std::uint_fast32_t>(streamInfo.currentBlockIndex));
     auto chunk = std::make_shared<RIFFChunk>(streamInfo.fourCC, chunkSource);
     avixListMovi->AppendChild(chunk);
 
@@ -565,7 +565,7 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
       chunk,
     });
 
-    const auto blockInfo = stream->GetBlockInfo(streamInfo.currentBlockIndex);
+    const auto blockInfo = stream->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfo.currentBlockIndex));
     perRIFFInfo.blocks.push_back(StreamInfo::PerBlockInfo{
       streamInfo.currentBlockIndex,
       blockInfo,

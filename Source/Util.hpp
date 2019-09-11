@@ -10,9 +10,9 @@ inline void CheckReadRange(std::size_t size, std::streamsize offset, std::stream
   assert(offset >= 0);
   assert(maxSize >= 0);
 
-  assert(size <= maxSize);
+  assert(static_cast<std::streamsize>(size) <= maxSize);
   assert(offset <= maxSize);
-  assert(size + offset <= maxSize);
+  assert(static_cast<std::streamsize>(size) + offset <= maxSize);
 }
 
 #endif
