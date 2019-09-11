@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <ios>
@@ -22,7 +23,7 @@ namespace {
   constexpr std::size_t DefaultBufferSize = 64 * 1024;
 
 
-  int ShowUsage(wchar_t* program) {
+  int ShowUsage(const wchar_t* program) {
     std::wcerr << L"mei2avi v0.2.0"sv << std::endl;
     std::wcerr << L"Copyright (c) 2019 SegaraRai"sv << std::endl;
     std::wcerr << std::endl;
