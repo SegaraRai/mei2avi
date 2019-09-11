@@ -54,7 +54,7 @@ mei2avi.exe video.mei - | ffplay pipe:0.avi
 
 ### 2. [EntisGLS](https://www.entis.jp/gls/)の導入
 
-[EntisGLS4Build](https://github.com/SegaraRai/EntisGLS4Build)のREADME.mdを参照してリポジトリのEntisGLS4Buildディレクトリ内に[EntisGLS](https://www.entis.jp/gls/)を導入してください。  
+[EntisGLS4Build](https://github.com/SegaraRai/EntisGLS4Build)の[README.mdのビルド手順](https://github.com/SegaraRai/EntisGLS4Build#%E3%83%93%E3%83%AB%E3%83%89%E6%89%8B%E9%A0%86)を参照してリポジトリのEntisGLS4Buildディレクトリ内に[EntisGLS](https://www.entis.jp/gls/)を導入してください。  
 
 ### 3. ビルド
 
