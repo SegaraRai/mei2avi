@@ -1,3 +1,4 @@
 [submodule "EntisGLS4Build"]
 	path = EntisGLS4Build
 	url = https://github.com/SegaraRai/EntisGLS4Build.git
+	ignore = dirty
