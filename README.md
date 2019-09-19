@@ -2,6 +2,12 @@
 
 MEIファイル（[ERIフォーマット](https://www.entis.jp/eridev/)）を無圧縮AVIファイルに変換するプログラムです。  
 
+## ダウンロード
+
+mei2avi.exeは[Releases](https://github.com/SegaraRai/mei2avi/releases)からダウンロードできます。  
+
+または、後述する[ビルド方法](#ビルド方法)を元にお手元の環境でビルドすることもできます。  
+
 ## 使い方
 
 ### AVIファイルに出力する
