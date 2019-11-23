@@ -43,9 +43,9 @@ video.meiの音声をvideo.wavに取り出します。
 mei2avi.exe video.mei - | ffmpeg -i pipe:0.avi -vn -c:a copy video.wav
 ```
 
-### [FFplay](https://ffmpeg.org/ffplay.html)で再生する
+### [ffplay](https://ffmpeg.org/ffplay.html)で再生する
 
-以下の様に実行するとvideo.meiを[FFplay](https://ffmpeg.org/ffplay.html)で再生できます。  
+以下の様に実行するとvideo.meiを[ffplay](https://ffmpeg.org/ffplay.html)で再生できます。  
 
 ```bat
 mei2avi.exe video.mei - | ffplay pipe:0.avi
