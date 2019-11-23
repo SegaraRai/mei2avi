@@ -419,7 +419,9 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
   bool initializeRiff = true;
 
+  // ストリームチャンクを追加していく
   while (true) {
+    // 残りストリーム
     std::vector<std::size_t> remainingStreams;
     for (std::size_t i = 0; i < mStreams.size(); i++) {
       const auto& streamInfo = streamInfoArray[i];
@@ -431,19 +433,23 @@ std::shared_ptr<SourceBase> AVIBuilder::BuildAVI() {
 
     const bool isAvix = riffAvix != riffAvi;
     const bool finished = remainingStreams.empty();
+
+    // 今のRIFF-AVIまたはRIFF-AVIXリストに次のチャンクが収まるか調べる
+    // 収まらなければこのチャンクでリストを終了し、次のRIFF-AVIXリストを開始する
+
     bool startNextAvix = false;
 
     const auto maxBlocks = isAvix ? MaxBlocksAVIX : MaxBlocksAVI;
     const auto maxRiffSize = isAvix ? MaxRiffSizeAVIX : MaxRiffSizeAVI;
 
-    // 次にブロックを置くストリーム
+    // 次のチャンクの（このチャンクの次に配置される）ストリーム（今のチャンクで最後なら適当に0）
     const std::size_t nextStreamIndex = finished ? 0 : *std::min_element(remainingStreams.cbegin(), remainingStreams.cend(), [this, &streamInfoArray] (std::size_t a, std::size_t b) {
       const auto timeA = streamInfoArray[a].timeCoef * mStreams[a]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[a].currentBlockIndex)).startTime;
       const auto timeB = streamInfoArray[b].timeCoef * mStreams[b]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[b].currentBlockIndex)).startTime;
       return timeA == timeB ? a < b : timeA < timeB;
     });
 
-    // 次のチャンクの大きさ
+    // 次のチャンクの大きさ（今のチャンクで最後なら0）
     const std::uint_fast32_t nextChunkSize = finished ? 0 : 8 + mStreams[nextStreamIndex]->GetBlockInfo(static_cast<std::uint_fast32_t>(streamInfoArray[nextStreamIndex].currentBlockIndex)).size;
 
     // finish this RIFF-AVI or RIFF-AVIX list
