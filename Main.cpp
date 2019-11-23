@@ -24,7 +24,7 @@ namespace {
 
 
   int ShowUsage(const wchar_t* program) {
-    std::wcerr << L"mei2avi v0.2.0"sv << std::endl;
+    std::wcerr << L"mei2avi v0.3.0"sv << std::endl;
     std::wcerr << L"Copyright (c) 2019 SegaraRai"sv << std::endl;
     std::wcerr << std::endl;
     std::wcerr << L"usage: "sv << program << L" [-quiet] [-noaudio] [-noalpha] [-orgfps] [-ablock sample] [-junksize size] [-bufsize size] infile outfile"sv << std::endl;
