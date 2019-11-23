@@ -14,7 +14,7 @@ CachedSource::CachedSource(CacheStorage& cacheStorage, std::shared_ptr<SourceBas
   mPtrCacheStorage(&cacheStorage),
   mSource(source),
   mSize(static_cast<std::size_t>(mSource->GetSize())),
-  mCacheId(0)
+  mCacheId()
 {}
 
 
@@ -26,7 +26,7 @@ std::streamsize CachedSource::GetSize() const {
 void CachedSource::Read(std::uint8_t* data, std::size_t size, std::streamsize offset) {
   CheckReadRange(size, offset, mSize);
 
-  const auto ptr = mPtrCacheStorage->Get(mCacheId);
+  const CacheStorage::CacheData* ptr = mCacheId ? mPtrCacheStorage->Get(mCacheId.value()) : nullptr;
   if (ptr) {
     std::memcpy(data, ptr->data.get() + offset, size);
     //std::wcerr << L"cache hit" << std::endl;
