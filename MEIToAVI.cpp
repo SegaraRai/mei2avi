@@ -101,7 +101,8 @@ namespace {
 
 
   class MeiVideoStream : public AVIBuilder::AVIStream {
-    ERISA::SGLMovieFilePlayer* mPtrMovieFilePlayer;
+    ERISA::SGLMovieFilePlayer& mMovieFilePlayer;
+    CacheStorage& mCacheStorage;
     std::uint_fast32_t mNumFrames;
     std::uint_fast32_t mFrameDataSize;
     AVI::AVIStreamHeader mStrh;
@@ -109,15 +110,16 @@ namespace {
     std::shared_ptr<MemorySource> mStrfMemorySource;
 
   public:
-    MeiVideoStream(ERISA::SGLMovieFilePlayer& movieFilePlayer, const AVI::AVIStreamHeader& strh) :
-      mPtrMovieFilePlayer(&movieFilePlayer),
-      mNumFrames(static_cast<std::uint_fast32_t>(mPtrMovieFilePlayer->GetAllFrameCount())),
+    MeiVideoStream(ERISA::SGLMovieFilePlayer& movieFilePlayer, CacheStorage& cacheStorage, const AVI::AVIStreamHeader& strh) :
+      mMovieFilePlayer(movieFilePlayer),
+      mCacheStorage(cacheStorage),
+      mNumFrames(static_cast<std::uint_fast32_t>(mMovieFilePlayer.GetAllFrameCount())),
       mFrameDataSize(0),
       mStrh(strh),
       mStrf{},
       mStrfMemorySource()
     {
-      const auto size = mPtrMovieFilePlayer->CurrentFrame()->GetImageSize();
+      const auto size = mMovieFilePlayer.CurrentFrame()->GetImageSize();
       mFrameDataSize = size.w * size.h * 4;
 
       mStrf = BITMAPINFOHEADER{
@@ -142,7 +144,7 @@ namespace {
     }
 
     std::uint_fast32_t CountStreams() const override {
-      return static_cast<std::uint_fast32_t>(mPtrMovieFilePlayer->GetAllFrameCount());
+      return static_cast<std::uint_fast32_t>(mMovieFilePlayer.GetAllFrameCount());
     }
 
     BlockInfo GetBlockInfo(std::uint_fast32_t index) const override {
@@ -155,7 +157,7 @@ namespace {
     }
 
     std::shared_ptr<SourceBase> GetBlockData(std::uint_fast32_t index) const override {
-      return std::make_shared<FrameImageSource>(*mPtrMovieFilePlayer, index);
+      return std::make_shared<CachedSource>(mCacheStorage, std::make_shared<FrameImageSource>(mMovieFilePlayer, index));
     }
 
     AVI::AVIStreamHeader GetStrh() override {
@@ -408,7 +410,7 @@ MEIToAVI::MEIToAVI(const std::wstring& filePath, const Options& options) :
   aviBuilder.SetAvihFlags(AVI::AVIF_HASINDEX | AVI::AVIF_ISINTERLEAVED | AVI::AVIF_TRUSTCKTYPE);
 
   // video stream
-  auto videoStream = std::make_shared<MeiVideoStream>(mMovieFilePlayer, AVI::AVIStreamHeader{
+  auto videoStream = std::make_shared<MeiVideoStream>(mMovieFilePlayer, mCacheStorage, AVI::AVIStreamHeader{
     AVI::GetFourCC("vids"),
     videoHasAlpha ? AVI::GetFourCC("RGBA") : AVI::GetFourCC("\0\0\0\0"),
     0u,
